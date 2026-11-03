@@ -4,10 +4,61 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#241f31" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>SweepDevDisk</title>
+    <script src="/theme-init.js"></script>
+    <style>
+      #boot-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        display: grid;
+        place-content: center;
+        justify-items: center;
+        gap: 14px;
+        background: #1f1f1f;
+        color: #f5f5f5;
+        font:
+          14px/1.5 Ubuntu,
+          Cantarell,
+          system-ui,
+          sans-serif;
+      }
+
+      :root[data-theme="light"] #boot-screen {
+        background: #f3f4f6;
+        color: #202124;
+      }
+
+      #boot-screen-indicator {
+        width: 28px;
+        height: 28px;
+        border: 3px solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        animation: boot-spin 0.8s linear infinite;
+      }
+
+      @keyframes boot-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #boot-screen-indicator {
+          animation-duration: 2s;
+        }
+      }
+    </style>
   </head>
 
   <body>
+    <div id="boot-screen" role="status" aria-live="polite">
+      <span id="boot-screen-indicator" aria-hidden="true"></span>
+      <span>A iniciar o SweepDevDisk…</span>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

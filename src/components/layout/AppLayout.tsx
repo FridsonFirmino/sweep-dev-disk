@@ -1,4 +1,4 @@
-import { CircleUserRound, HardDrive, LayoutDashboard, Settings } from "lucide-react";
+import { CircleUserRound, LayoutDashboard, Settings } from "lucide-react";
 import type { ReactNode } from "react";
 
 export type AppPage = "overview" | "settings" | "about";
@@ -14,7 +14,7 @@ export function AppLayout({ page, onNavigate, children }: AppLayoutProps) {
     <div className="flex h-dvh min-w-[900px] overflow-hidden bg-background font-sans text-foreground">
       <aside className="flex h-full w-[208px] shrink-0 flex-col border-r border-border bg-sidebar px-3 py-4">
         <div className="mb-8 flex h-9 items-center gap-2.5 px-2">
-          <HardDrive className="size-6 text-primary" aria-hidden="true" />
+          <img src="/icon.png" alt="" className="size-7 shrink-0" aria-hidden="true" />
           <span className="text-lg font-semibold tracking-tight">SweepDevDisk</span>
         </div>
         <nav aria-label="Navegação principal" className="flex flex-col gap-1">
