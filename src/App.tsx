@@ -1,17 +1,24 @@
+import { AppLayout, type AppPage } from "@/components/layout/AppLayout";
+import { OverviewPage } from "@/features/overview/OverviewPage";
+import { AboutPage } from "@/features/about/AboutPage";
+import { SettingsPage } from "@/features/settings/SettingsPage";
+import { useTheme } from "@/hooks/use-theme";
+import { useState } from "react";
+
 function App() {
+  const [page, setPage] = useState<AppPage>("overview");
+  const { preference, setPreference } = useTheme();
+
   return (
-    <main className="welcome-card">
-      <div className="brand-mark" aria-hidden="true">
-        S
-      </div>
-      <p className="eyebrow">DESKTOP DEVELOPMENT FOUNDATION</p>
-      <h1>SweepDevDisk</h1>
-      <p className="intro">A local-first workspace for understanding development disk usage.</p>
-      <div className="status">
-        <span className="status-dot" /> Development environment ready
-      </div>
-      <p className="note">Project scanning and cleanup are not available yet.</p>
-    </main>
+    <AppLayout page={page} onNavigate={setPage}>
+      {page === "overview" ? (
+        <OverviewPage />
+      ) : page === "settings" ? (
+        <SettingsPage preference={preference} onPreferenceChange={setPreference} />
+      ) : (
+        <AboutPage />
+      )}
+    </AppLayout>
   );
 }
 

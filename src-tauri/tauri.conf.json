@@ -14,10 +14,11 @@
       {
         "label": "main",
         "title": "SweepDevDisk",
-        "width": 600,
-        "height": 600,
-        "minWidth": 480,
-        "minHeight": 420
+        "width": 1100,
+        "height": 750,
+        "minWidth": 900,
+        "minHeight": 600,
+        "resizable": true
       }
     ],
     "security": {
