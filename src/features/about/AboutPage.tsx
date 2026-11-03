@@ -1,15 +1,6 @@
 import { aboutConfig } from "@/features/about/aboutConfig";
 import { openExternalUrl } from "@/lib/open-external-url";
-import {
-  Code2,
-  ExternalLink,
-  Github,
-  HardDrive,
-  Heart,
-  Info,
-  LockKeyhole,
-  UserRound,
-} from "lucide-react";
+import { Code2, ExternalLink, Github, Heart, Info, LockKeyhole, UserRound } from "lucide-react";
 
 const systemInfo = [
   { label: "Versão", value: aboutConfig.version },
@@ -43,8 +34,8 @@ export function AboutPage() {
         className="rounded-lg border border-border bg-surface p-5"
       >
         <div className="flex items-start gap-4">
-          <div className="grid size-12 shrink-0 place-items-center rounded-lg bg-hover text-secondary">
-            <HardDrive className="size-6" aria-hidden="true" />
+          <div className="grid size-12 shrink-0 place-items-center rounded-lg bg-hover">
+            <img src="/icon.png" alt="" className="size-9 object-contain" aria-hidden="true" />
           </div>
           <div className="min-w-0 flex-1">
             <h2 id="product-heading" className="text-lg font-semibold">
