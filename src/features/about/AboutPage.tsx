@@ -4,7 +4,7 @@ import { Code2, ExternalLink, Github, Heart, Info, LockKeyhole, UserRound } from
 
 const systemInfo = [
   { label: "Versão", value: aboutConfig.version },
-  { label: "Plataforma", value: "Computador Linux" },
+  { label: "Plataformas", value: "Linux | Windows" },
   { label: "Estrutura da aplicação", value: "Tauri 2 · Rust" },
   { label: "Interface", value: "React · TypeScript · Tailwind CSS 4" },
 ];

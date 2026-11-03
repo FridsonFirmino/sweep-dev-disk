@@ -3,7 +3,7 @@
 ## Fundação
 
 - [x] Ficheiros base do projecto e ambientes iniciais de testes para frontend e backend criados.
-- [ ] Executar e validar o ambiente completo num sistema Linux com as bibliotecas do Tauri.
+- [ ] Executar e validar o ambiente completo em Ubuntu e Windows com as dependências do Tauri.
 - [ ] Configurar os responsáveis no CODEOWNERS e os URLs dos emblemas quando forem conhecidos os responsáveis e o URL oficial.
 
 ## Scanner de projectos
@@ -62,7 +62,8 @@
 - [ ] Acrescentar testes de integração para casos limite do sistema de ficheiros.
 - [ ] Auditar as capabilities do Tauri e as dependências.
 
-## Distribuição para Linux
+## Distribuição para Ubuntu e Windows
 
-- [ ] Validar os pacotes `.deb` e AppImage nas distribuições suportadas.
+- [ ] Validar os pacotes `.deb` e AppImage nas versões de Ubuntu suportadas.
+- [ ] Validar os instaladores MSI e NSIS nas versões de Windows suportadas.
 - [ ] Documentar assinatura, checksums e política de suporte das releases.

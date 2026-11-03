@@ -19,6 +19,17 @@
   --error: #ef6b66;
 }
 
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 900px;
+  height: 100%;
+  margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
 :root[data-theme="light"] {
   color-scheme: light;
   --background: #f3f4f6;

@@ -8,7 +8,7 @@ Para criar uma release:
 
 1. Integre as alterações revistas em `main` e actualize os três campos de versão.
 2. Crie e envie uma tag explícita, por exemplo: `git tag v0.1.0 && git push origin v0.1.0`.
-3. O workflow da tag valida o SemVer e a consistência das versões, executa as verificações de qualidade, compila os pacotes Linux `.deb` e `.AppImage` e publica uma GitHub Release com notas geradas e os artefactos anexados.
+3. O workflow da tag valida o SemVer e a consistência das versões, executa as verificações de qualidade e compila os instaladores em runners nativos: `.deb` e `.AppImage` em Ubuntu, `.msi` e NSIS em Windows. Depois publica uma GitHub Release com notas geradas e os artefactos anexados.
 4. Reveja os ficheiros e as notas publicados.
 
 Pushes sem uma tag `v*` não publicam releases. O workflow de release requer que GitHub Actions e GitHub Releases estejam activos no repositório.

@@ -4,7 +4,7 @@
 
 ![CI](https://github.com/OWNER/REPOSITORY/actions/workflows/ci.yml/badge.svg) ![Rust](https://img.shields.io/badge/Rust-stable-orange) ![React](https://img.shields.io/badge/React-19-61dafb) ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6) ![Tauri](https://img.shields.io/badge/Tauri-2-ffc131) ![License](https://img.shields.io/badge/license-MIT-green)
 
-O SweepDevDisk é uma aplicação de ambiente de trabalho para Linux, planeada para auditar o espaço em disco ocupado por artefactos de desenvolvimento que podem ser gerados novamente. Foi concebida como uma ferramenta local, sem servidor remoto.
+O SweepDevDisk é uma aplicação de ambiente de trabalho para Ubuntu Linux e Windows, planeada para auditar o espaço em disco ocupado por artefactos de desenvolvimento que podem ser gerados novamente. Foi concebida como uma ferramenta local, sem servidor remoto.
 
 ## Objectivo do produto
 
@@ -21,7 +21,7 @@ Consulte [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) para mais informações.
 
 ## Requisitos
 
-Linux, Node.js 24 LTS, pnpm 12, Rust stable com Cargo e as bibliotecas de desenvolvimento Linux do Tauri. Consulte [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md).
+Node.js 24 LTS, pnpm 12 e Rust stable com Cargo. Para compilar a aplicação de ambiente de trabalho, instale também os requisitos do Tauri para [Ubuntu](docs/DEVELOPMENT.md#ubuntu-linux) ou [Windows](docs/DEVELOPMENT.md#windows).
 
 ## Instalação e execução
 
@@ -43,11 +43,11 @@ cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets --all-features -
 cargo test --manifest-path src-tauri/Cargo.toml --all
 ```
 
-Compilação de produção: `pnpm build`. Pacotes Linux: `pnpm tauri build --bundles deb,appimage`.
+Compilação do frontend: `pnpm build`. Em Ubuntu, compile os pacotes `.deb` e AppImage com `pnpm tauri build`; em Windows, compile os instaladores `.msi` e NSIS com `pnpm tauri build --config src-tauri/tauri.windows.conf.json`.
 
 ## Contribuição e roteiro
 
-Leia [CONTRIBUTING.md](docs/CONTRIBUTING.md) e a [lista central de tarefas](docs/TASKS.md). O plano inclui a análise de projectos, a detecção de artefactos, a análise de armazenamento, um painel, limpeza segura, histórico, regras, agendamento, segurança e distribuição para Linux.
+Leia [CONTRIBUTING.md](docs/CONTRIBUTING.md) e a [lista central de tarefas](docs/TASKS.md). O plano inclui a análise de projectos, a detecção de artefactos, a análise de armazenamento, um painel, limpeza segura, histórico, regras, agendamento, segurança e distribuição para Ubuntu e Windows.
 
 ## Licença
 
