@@ -36,7 +36,7 @@ export function ProjectRow({ project, selected, onClick }: ProjectRowProps) {
       <span className="truncate text-xs text-secondary" title={project.technology}>
         {project.technology}
       </span>
-      <span className="text-xs text-secondary">{project.artifacts.length} artifacts</span>
+      <span className="text-xs text-secondary">{project.artifacts.length} artefactos</span>
       <span className="text-right text-xs font-medium tabular-nums">
         {formatBytes(reclaimable)}
       </span>

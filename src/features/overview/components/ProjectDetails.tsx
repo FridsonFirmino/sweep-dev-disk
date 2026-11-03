@@ -18,7 +18,7 @@ export function ProjectDetails({ project, selectedIds, onToggle, onReview }: Pro
 
   return (
     <aside
-      aria-label={`${project.name} details`}
+      aria-label={`Detalhes de ${project.name}`}
       className="h-fit rounded-md border border-border bg-surface"
     >
       <div className="border-b border-border p-4">
@@ -34,17 +34,17 @@ export function ProjectDetails({ project, selectedIds, onToggle, onReview }: Pro
         <p className="mt-3 text-xs text-secondary">{project.technology}</p>
         <p className="mt-1.5 flex items-center gap-1.5 text-xs text-muted">
           <Clock3 className="size-3.5" aria-hidden="true" />
-          Active {formatActivity(project.lastActivity)}
+          Actividade: {formatActivity(project.lastActivity)}
         </p>
       </div>
 
       <div className="p-4">
         <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-[13px] font-semibold">Artifacts</h3>
-          <span className="text-[11px] text-muted">{project.artifacts.length} found</span>
+          <h3 className="text-[13px] font-semibold">Artefactos</h3>
+          <span className="text-[11px] text-muted">{project.artifacts.length} encontrados</span>
         </div>
         {project.artifacts.length === 0 ? (
-          <p className="py-4 text-xs text-secondary">No artifacts found.</p>
+          <p className="py-4 text-xs text-secondary">Não foram encontrados artefactos.</p>
         ) : (
           <ul className="space-y-1">
             {project.artifacts.map((artifact) => (
@@ -58,7 +58,7 @@ export function ProjectDetails({ project, selectedIds, onToggle, onReview }: Pro
           </ul>
         )}
         <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
-          <span className="text-xs text-secondary">Selected recovery</span>
+          <span className="text-xs text-secondary">Espaço seleccionado</span>
           <span className="text-xs font-semibold tabular-nums">{formatBytes(selectedBytes)}</span>
         </div>
         <button
@@ -67,7 +67,7 @@ export function ProjectDetails({ project, selectedIds, onToggle, onReview }: Pro
           onClick={onReview}
           className={`${secondaryButton} mt-3 w-full justify-center`}
         >
-          Review cleanup
+          Rever limpeza
         </button>
       </div>
     </aside>

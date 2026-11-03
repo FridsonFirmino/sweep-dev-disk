@@ -32,7 +32,7 @@ export function ArtifactItem({ artifact, checked, onChange }: ArtifactItemProps)
             {artifact.path}
           </span>
           <span className="mt-1 flex items-center gap-1 text-[10px] capitalize text-secondary">
-            <ShieldCheck className="size-3" aria-hidden="true" /> {artifact.risk} risk
+            <ShieldCheck className="size-3" aria-hidden="true" /> risco {artifact.risk}
           </span>
         </span>
       </label>

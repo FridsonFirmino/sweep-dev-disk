@@ -54,7 +54,9 @@ export function OverviewPage() {
     } catch (cause) {
       if (!(cause instanceof DOMException && cause.name === "AbortError")) {
         setError(
-          cause instanceof Error ? cause.message : "The project scan could not be completed.",
+          cause instanceof Error
+            ? cause.message
+            : "Não foi possível concluir a análise dos projectos.",
         );
       }
     } finally {
@@ -107,7 +109,7 @@ export function OverviewPage() {
       setSelectedArtifactIds([]);
       setReviewOpen(false);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "The cleanup could not be completed.");
+      setError(cause instanceof Error ? cause.message : "Não foi possível concluir a limpeza.");
       setReviewOpen(false);
     }
   }

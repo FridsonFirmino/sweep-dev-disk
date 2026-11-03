@@ -12,9 +12,9 @@ import {
 } from "lucide-react";
 
 const systemInfo = [
-  { label: "Version", value: aboutConfig.version },
-  { label: "Platform", value: "Linux desktop" },
-  { label: "Desktop shell", value: "Tauri 2 · Rust" },
+  { label: "Versão", value: aboutConfig.version },
+  { label: "Plataforma", value: "Computador Linux" },
+  { label: "Estrutura da aplicação", value: "Tauri 2 · Rust" },
   { label: "Interface", value: "React · TypeScript · Tailwind CSS 4" },
 ];
 
@@ -32,9 +32,9 @@ export function AboutPage() {
   return (
     <div className="mx-auto max-w-4xl px-8 py-8">
       <header className="mb-7 border-b border-border pb-5">
-        <h1 className="text-2xl font-semibold tracking-tight">About</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Acerca de</h1>
         <p className="mt-1.5 text-[13px] text-secondary">
-          Information about SweepDevDisk and the people behind it.
+          Informações sobre o SweepDevDisk e as pessoas que o desenvolvem.
         </p>
       </header>
 
@@ -51,8 +51,9 @@ export function AboutPage() {
               SweepDevDisk
             </h2>
             <p className="mt-1 max-w-2xl text-[13px] leading-5 text-secondary">
-              A local-first desktop app for finding development artifacts that use disk space and
-              reviewing what could be reclaimed.
+              Uma aplicação de ambiente de trabalho que identifica ficheiros de desenvolvimento que
+              ocupam espaço e permite rever o que pode ser recuperado, mantendo os dados no
+              dispositivo.
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {repositoryUrl ? (
@@ -67,22 +68,22 @@ export function AboutPage() {
                   className="inline-flex h-9 items-center gap-2 rounded-md bg-primary px-3 text-[13px] font-medium text-white hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
                 >
                   <Github className="size-4" aria-hidden="true" />
-                  View on GitHub
+                  Ver no GitHub
                   <ExternalLink className="size-3.5" aria-hidden="true" />
                 </a>
               ) : (
                 <button
                   type="button"
                   disabled
-                  title="The repository URL has not been configured yet."
+                  title="O endereço do repositório ainda não foi configurado."
                   className="inline-flex h-9 cursor-not-allowed items-center gap-2 rounded-md bg-primary/50 px-3 text-[13px] font-medium text-white/80"
                 >
                   <Github className="size-4" aria-hidden="true" />
-                  GitHub link to be added
+                  Ligação para o GitHub por adicionar
                 </button>
               )}
               <span className="inline-flex h-8 items-center rounded-md border border-border px-2.5 text-xs text-secondary">
-                Version {aboutConfig.version}
+                Versão {aboutConfig.version}
               </span>
             </div>
           </div>
@@ -93,7 +94,7 @@ export function AboutPage() {
         <div className="mb-3 flex items-center gap-2">
           <Info className="size-4 text-secondary" aria-hidden="true" />
           <h2 id="system-heading" className="text-[15px] font-semibold">
-            System information
+            Informações do sistema
           </h2>
         </div>
         <dl className="divide-y divide-border rounded-lg border border-border bg-surface px-4">
@@ -117,12 +118,12 @@ export function AboutPage() {
           {developer.imageUrl ? (
             <img
               src={developer.imageUrl}
-              alt={`${developer.name} profile`}
+              alt={`Fotografia de perfil de ${developer.name}`}
               className="size-16 rounded-full object-cover"
             />
           ) : (
             <div
-              aria-label={`${developer.name} initials`}
+              aria-label={`Iniciais de ${developer.name}`}
               className="grid size-16 shrink-0 place-items-center rounded-full bg-hover text-lg font-semibold text-secondary"
             >
               {initials}
@@ -151,28 +152,30 @@ export function AboutPage() {
                   </a>
                 ))
               ) : (
-                <span className="text-xs text-muted">Social links can be added later.</span>
+                <span className="text-xs text-muted">
+                  As ligações para redes sociais podem ser adicionadas mais tarde.
+                </span>
               )}
             </div>
           </div>
         </div>
       </section>
 
-      <section aria-label="Project notes" className="mt-7 grid gap-3 sm:grid-cols-2">
+      <section aria-label="Informações do projecto" className="mt-7 grid gap-3 sm:grid-cols-2">
         <AboutNote
           icon={<LockKeyhole className="size-4" aria-hidden="true" />}
-          title="Designed for local use"
-          description="Project paths and cleanup actions are intended to stay on your device. No remote backend is configured."
+          title="Concebido para utilização local"
+          description="Os caminhos dos projectos e as operações de limpeza destinam-se a permanecer no seu dispositivo. Não está configurado nenhum serviço remoto."
         />
         <AboutNote
           icon={<Code2 className="size-4" aria-hidden="true" />}
-          title="Open development"
-          description="The interface is being built incrementally; project scanning and cleanup are not available yet."
+          title="Desenvolvimento em curso"
+          description="A interface está a ser desenvolvida por etapas; a análise de projectos e a limpeza ainda não estão disponíveis."
         />
       </section>
 
       <p className="mt-7 flex items-center justify-center gap-1.5 text-xs text-muted">
-        Made with <Heart className="size-3.5" aria-hidden="true" /> by Fridson Firmino
+        Feito com <Heart className="size-3.5" aria-hidden="true" /> por Fridson Firmino
       </p>
     </div>
   );

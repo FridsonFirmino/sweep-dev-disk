@@ -44,10 +44,10 @@ export function CleanupReviewDialog({
         </div>
         <div>
           <h2 id="cleanup-title" className="text-base font-semibold">
-            Review cleanup
+            Rever limpeza
           </h2>
           <p className="mt-1 text-xs text-secondary">
-            Review these paths before confirming the cleanup.
+            Reveja estes caminhos antes de confirmar a limpeza.
           </p>
         </div>
       </div>
@@ -59,22 +59,22 @@ export function CleanupReviewDialog({
             <p className="text-xs font-medium">{artifact.name}</p>
             <p className="mt-1 break-all font-mono text-[10px] text-muted">{artifact.path}</p>
             <p className="mt-1 text-[11px] text-secondary">
-              {formatBytes(artifact.reclaimableBytes)} · {artifact.risk} risk
+              {formatBytes(artifact.reclaimableBytes)} · risco {artifact.risk}
             </p>
           </li>
         ))}
       </ul>
       <p className="mt-3 flex justify-between border-t border-border pt-3 text-xs">
-        <span>Estimated space to reclaim</span>
+        <span>Espaço estimado a recuperar</span>
         <strong>{formatBytes(total)}</strong>
       </p>
       <div className="mt-5 flex justify-end gap-2">
         <button type="button" onClick={onCancel} className={secondaryButton}>
-          Cancel
+          Cancelar
         </button>
         <button type="button" onClick={onConfirm} className={destructiveButton}>
           <Trash2 className="size-4" aria-hidden="true" />
-          Confirm cleanup
+          Confirmar limpeza
         </button>
       </div>
     </dialog>

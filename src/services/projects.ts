@@ -5,7 +5,7 @@ import { listen } from "@tauri-apps/api/event";
 
 export class BackendUnavailableError extends Error {
   constructor(operation: string) {
-    super(`The ${operation} service is not available in this build.`);
+    super(`O serviço de ${operation} não está disponível nesta versão.`);
     this.name = "BackendUnavailableError";
   }
 }
@@ -26,7 +26,7 @@ function wait(delayMs: number, signal: AbortSignal) {
       "abort",
       () => {
         window.clearTimeout(timeout);
-        reject(new DOMException("The scan was cancelled.", "AbortError"));
+        reject(new DOMException("A análise foi cancelada.", "AbortError"));
       },
       { once: true },
     );
@@ -39,7 +39,7 @@ async function runDemoScan(
 ): Promise<ScanResult> {
   const demoMode = getDemoMode();
   if (demoMode === "error")
-    throw new Error("Demo error: access to the selected folder was denied.");
+    throw new Error("Erro de demonstração: o acesso à pasta seleccionada foi recusado.");
 
   const paths = [
     "/home/ines/Projects",
@@ -72,8 +72,8 @@ export async function scanProjects(
     unlisten = await listen<ScanProgress>("scan-progress", ({ payload }) => onProgress(payload));
     return await invoke<ScanResult>("scan_projects");
   } catch (error) {
-    if (error instanceof Error && error.message.includes("not available")) throw error;
-    throw new BackendUnavailableError("project scanning");
+    if (error instanceof Error && error.message.includes("não está disponível")) throw error;
+    throw new BackendUnavailableError("análise de projectos");
   } finally {
     unlisten();
   }
@@ -98,6 +98,6 @@ export async function cleanArtifacts(selection: CleanupSelection): Promise<Clean
   try {
     return await invoke<CleanupResult>("cleanup_artifacts", { selection });
   } catch {
-    throw new BackendUnavailableError("cleanup");
+    throw new BackendUnavailableError("limpeza");
   }
 }

@@ -17,29 +17,29 @@ export function AppLayout({ page, onNavigate, children }: AppLayoutProps) {
           <HardDrive className="size-6 text-primary" aria-hidden="true" />
           <span className="text-lg font-semibold tracking-tight">SweepDevDisk</span>
         </div>
-        <nav aria-label="Main navigation" className="flex flex-col gap-1">
+        <nav aria-label="Navegação principal" className="flex flex-col gap-1">
           <NavItem
             active={page === "overview"}
             icon={<LayoutDashboard className="size-4" />}
-            label="Overview"
+            label="Visão geral"
             onClick={() => onNavigate("overview")}
           />
           {/* <div className="my-1" /> */}
           <NavItem
             active={page === "settings"}
             icon={<Settings className="size-4" />}
-            label="Settings"
+            label="Definições"
             onClick={() => onNavigate("settings")}
           />
           <NavItem
             active={page === "about"}
             icon={<CircleUserRound className="size-4" />}
-            label="About"
+            label="Acerca de"
             onClick={() => onNavigate("about")}
           />
         </nav>
         <div className="mt-auto border-t border-border pt-3">
-          <p className="px-2 pb-1 pt-4 text-[11px] text-muted">Version 0.1.0</p>
+          <p className="px-2 pb-1 pt-4 text-[11px] text-muted">Versão 0.1.0</p>
         </div>
       </aside>
       <main className="h-full min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-y-contain">

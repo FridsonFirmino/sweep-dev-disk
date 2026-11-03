@@ -15,9 +15,10 @@ export function ScanProgressView({ progress }: { progress: ScanProgress | null }
     >
       <div className="flex items-center gap-2.5">
         <LoaderCircle className="size-4 animate-spin text-secondary" aria-hidden="true" />
-        <span className="text-[13px] font-medium">Scanning projects…</span>
+        <span className="text-[13px] font-medium">A analisar projectos…</span>
         <span className="ml-auto text-xs text-secondary">
-          {progress?.projectsFound ?? 0} projects · {progress?.artifactsFound ?? 0} artifacts found
+          {progress?.projectsFound ?? 0} projectos · {progress?.artifactsFound ?? 0} artefactos
+          encontrados
         </span>
       </div>
       {progress?.currentPath && (
@@ -32,7 +33,7 @@ export function ScanProgressView({ progress }: { progress: ScanProgress | null }
         <div
           className="mt-3 h-1 overflow-hidden rounded-full bg-hover"
           role="progressbar"
-          aria-label="Scan progress"
+          aria-label="Progresso da análise"
           aria-valuenow={percentage}
           aria-valuemin={0}
           aria-valuemax={100}

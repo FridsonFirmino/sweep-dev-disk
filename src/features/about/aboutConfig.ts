@@ -5,7 +5,7 @@ export const aboutConfig = {
   repositoryUrl: "https://github.com/FridsonFirmino/sweep-dev-disk",
   developer: {
     name: "Fridson Firmino",
-    title: "Software Engineer",
+    title: "Engenheiro de software",
     imageUrl: null as string | null,
     socialLinks: [
       {

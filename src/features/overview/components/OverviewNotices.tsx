@@ -10,7 +10,7 @@ export function DemoNotice() {
   return (
     <p className="mt-4 inline-flex items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 py-1.5 text-[11px] text-secondary">
       <AlertTriangle className="size-3.5" aria-hidden="true" />
-      Development demo data — no real folders are being scanned.
+      Dados de demonstração — não estão a ser analisadas pastas reais.
     </p>
   );
 }
@@ -25,8 +25,8 @@ export function ErrorNotice({ message, onDismiss }: { message: string; onDismiss
       <p className="min-w-0 flex-1">{message}</p>
       <button
         type="button"
-        title="Dismiss error"
-        aria-label="Dismiss error"
+        title="Fechar erro"
+        aria-label="Fechar erro"
         onClick={onDismiss}
         className="rounded p-1 hover:bg-error/10 focus-visible:outline-2 focus-visible:outline-primary"
       >
@@ -43,7 +43,7 @@ export function CleanupSuccessNotice({ result }: { result: CleanupResult }) {
       className="mt-5 flex items-center gap-2 rounded-md border border-success/30 bg-success/10 p-3 text-[13px] text-success"
     >
       <CheckCircle2 className="size-4" aria-hidden="true" />
-      Reclaimed {formatBytes(result.reclaimedBytes)}.
+      Espaço recuperado: {formatBytes(result.reclaimedBytes)}.
     </div>
   );
 }

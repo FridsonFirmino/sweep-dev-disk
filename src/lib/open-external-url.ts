@@ -6,7 +6,7 @@ const allowedHost = "github.com";
 export async function openExternalUrl(value: string) {
   const url = new URL(value);
   if (url.protocol !== "https:" || url.hostname !== allowedHost) {
-    throw new Error("Only HTTPS links to GitHub can be opened externally.");
+    throw new Error("Só é possível abrir ligações HTTPS para o GitHub.");
   }
 
   if (isTauri()) {

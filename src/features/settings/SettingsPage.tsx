@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import type { FormEvent, ReactNode } from "react";
-import { FolderPlus, Languages, LockKeyhole, Monitor, Moon, Sun, Trash2, X } from "lucide-react";
-import type { ThemePreference } from "@/hooks/use-theme";
 import {
   readSettingsPreferences,
   saveSettingsPreferences,
   type SettingsPreferences,
 } from "@/features/settings/settings-preferences";
+import type { ThemePreference } from "@/hooks/use-theme";
+import { FolderPlus, Languages, LockKeyhole, Monitor, Moon, Sun, Trash2, X } from "lucide-react";
+import type { FormEvent, ReactNode } from "react";
+import { useEffect, useState } from "react";
 
 interface SettingsPageProps {
   preference: ThemePreference;
@@ -21,12 +21,12 @@ const themeChoices: Array<{
 }> = [
   {
     value: "system",
-    label: "System",
-    description: "Follow your desktop appearance.",
+    label: "Sistema",
+    description: "Seguir a aparência do ambiente de trabalho.",
     Icon: Monitor,
   },
-  { value: "light", label: "Light", description: "Use a light appearance.", Icon: Sun },
-  { value: "dark", label: "Dark", description: "Use a dark appearance.", Icon: Moon },
+  { value: "light", label: "Claro", description: "Utilizar uma aparência clara.", Icon: Sun },
+  { value: "dark", label: "Escuro", description: "Utilizar uma aparência escura.", Icon: Moon },
 ];
 
 export function SettingsPage({ preference, onPreferenceChange }: SettingsPageProps) {
@@ -43,35 +43,35 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
   return (
     <div className="mx-auto max-w-4xl px-8 py-8">
       <header className="mb-7 border-b border-border pb-5">
-        <h1 className="text-2xl font-semibold tracking-tight">Settings</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Definições</h1>
         <p className="mt-1.5 text-[13px] text-secondary">
-          Configure the interface, scanning preferences and cleanup safeguards.
+          Configure a interface, as preferências de verificação e as de limpezas
         </p>
       </header>
 
       <SettingsSection
         icon={<Languages className="size-4" aria-hidden="true" />}
-        title="Language"
-        description="Choose the language used by the interface. Language switching is not available yet."
+        title="Idioma"
+        description="Escolha o idioma da interface. A alteração do idioma ainda não está disponível."
       >
         <label className="flex max-w-md flex-col gap-1.5 text-xs text-secondary">
           Interface language
           <select
-            aria-label="Interface language"
+            aria-label="Idioma da interface"
             value="pt"
             disabled
             className="h-9 rounded-md border border-border bg-hover px-3 text-[13px] text-foreground opacity-80"
           >
             <option value="pt">Português (PT)</option>
-            <option value="en">English (EN)</option>
-            <option value="es">Español (ES)</option>
+            <option value="en">Inglês (EN)</option>
+            <option value="es">Espanhol (ES)</option>
           </select>
         </label>
       </SettingsSection>
 
       <SettingsSection
-        title="Appearance"
-        description="Choose how SweepDevDisk looks on your desktop."
+        title="Aparência"
+        description="Escolha o aspecto do SweepDevDisk no seu ambiente de trabalho."
       >
         <div className="divide-y divide-border rounded-md border border-border">
           {themeChoices.map(({ value, label, description, Icon }) => (
@@ -98,13 +98,13 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
       </SettingsSection>
 
       <SettingsSection
-        title="Scanning"
-        description="Choose where project scans look and which directories they include. These preferences are saved locally; scanner integration is not available yet."
+        title="Análise"
+        description="Escolha onde procurar projectos e que directórios incluir. Estas preferências são guardadas localmente; a integração com o analisador ainda não está disponível."
       >
         <DirectoryEditor
-          title="Project directories"
-          description="Directories to search for projects. Examples: ~/Projects, ~/Documents/GitHub, ~/Work."
-          placeholder="e.g. ~/Projects"
+          title="Directórios dos projectos"
+          description="Directórios onde procurar projectos. Exemplos: ~/Projects, ~/Documents/GitHub, ~/Work."
+          placeholder="ex.: ~/Projects"
           directories={settings.projectDirectories}
           onAdd={(path) =>
             update("projectDirectories", addUnique(settings.projectDirectories, path))
@@ -117,9 +117,9 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
           }
         />
         <DirectoryEditor
-          title="Excluded directories"
-          description="Paths to skip during scans."
-          placeholder="e.g. ~/Work/archive"
+          title="Directórios excluídos"
+          description="Caminhos a ignorar durante as análises."
+          placeholder="ex.: ~/Work/archive"
           directories={settings.excludedDirectories}
           onAdd={(path) =>
             update("excludedDirectories", addUnique(settings.excludedDirectories, path))
@@ -133,14 +133,14 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
         />
         <div className="divide-y divide-border rounded-md border border-border">
           <SwitchSetting
-            label="Follow symbolic links"
-            description="Follow symlinks while scanning. Disabled by default to avoid leaving selected directories."
+            label="Seguir ligações simbólicas"
+            description="Seguir ligações simbólicas durante a análise. Desactivado por predefinição para evitar sair dos directórios seleccionados."
             checked={settings.followSymbolicLinks}
             onChange={(checked) => update("followSymbolicLinks", checked)}
           />
           <SwitchSetting
-            label="Scan hidden directories"
-            description="Include hidden directories in project scans."
+            label="Analisar directórios ocultos"
+            description="Incluir directórios ocultos na análise de projectos."
             checked={settings.scanHiddenDirectories}
             onChange={(checked) => update("scanHiddenDirectories", checked)}
           />
@@ -148,40 +148,42 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
       </SettingsSection>
 
       <SettingsSection
-        title="Cleanup"
-        description="Safety settings for removing development artifacts. Cleanup is not connected to the backend yet."
+        title="Limpeza"
+        description="Definições de segurança para remover artefactos de desenvolvimento. A limpeza ainda não está ligada ao serviço de sistema."
       >
         <div className="divide-y divide-border rounded-md border border-border">
           <div className="flex min-h-14 items-center justify-between gap-6 px-3.5 py-2.5">
             <div className="flex items-start gap-3">
               <Trash2 className="mt-0.5 size-4 text-secondary" aria-hidden="true" />
               <div>
-                <p className="text-[13px] font-medium">Cleanup method</p>
-                <p className="mt-0.5 text-xs text-muted">Send selected artifacts to the Trash.</p>
+                <p className="text-[13px] font-medium">Método de limpeza</p>
+                <p className="mt-0.5 text-xs text-muted">
+                  Mover os artefactos seleccionados para o Lixo.
+                </p>
               </div>
             </div>
             <span className="rounded border border-border px-2 py-1 text-xs text-secondary">
-              Move to Trash
+              Mover para o Lixo
             </span>
           </div>
           <LockedSafetySetting
-            label="Confirm before cleanup"
-            description="Require confirmation before removing selected artifacts."
+            label="Confirmar antes da limpeza"
+            description="Exigir confirmação antes de remover os artefactos seleccionados."
           />
           <LockedSafetySetting
-            label="Recalculate before cleanup"
-            description="Revalidate selected artifacts immediately before cleanup."
+            label="Recalcular antes da limpeza"
+            description="Validar novamente os artefactos seleccionados imediatamente antes da limpeza."
           />
         </div>
         <p className="mt-2 flex items-center gap-1.5 text-[11px] text-muted">
-          <LockKeyhole className="size-3.5" aria-hidden="true" />
-          Confirmation and revalidation stay enabled for safety.
+          <LockKeyhole className="size-3.5" aria-hidden="true" />A confirmação e a validação
+          mantêm-se activas por segurança.
         </p>
       </SettingsSection>
 
       <p className="mt-6 text-[11px] text-muted">
-        Scanning and cleanup preferences are stored locally, but will not affect operations until
-        the Rust backend integration is implemented.
+        As preferências de análise e limpeza são guardadas localmente, mas não afectam as operações
+        enquanto não for implementada a integração com o serviço Rust.
       </p>
     </div>
   );
@@ -250,8 +252,8 @@ function DirectoryEditor({
               <code className="min-w-0 flex-1 truncate text-xs text-foreground">{path}</code>
               <button
                 type="button"
-                aria-label={`Remove ${path}`}
-                title={`Remove ${path}`}
+                aria-label={`Remover ${path}`}
+                title={`Remover ${path}`}
                 onClick={() => onRemove(path)}
                 className="rounded p-1 text-muted hover:bg-hover hover:text-foreground focus-visible:outline-2 focus-visible:outline-primary"
               >
@@ -262,7 +264,7 @@ function DirectoryEditor({
         </ul>
       ) : (
         <p className="mb-3 rounded-md bg-hover px-3 py-2.5 text-xs text-muted">
-          No directories added.
+          Ainda não foram adicionados directórios.
         </p>
       )}
       <form onSubmit={submit} className="flex gap-2">
@@ -270,7 +272,7 @@ function DirectoryEditor({
           value={value}
           onChange={(event) => setValue(event.currentTarget.value)}
           placeholder={placeholder}
-          aria-label={`Path for ${title.toLowerCase()}`}
+          aria-label={`Caminho para ${title.toLowerCase()}`}
           className="h-9 min-w-0 flex-1 rounded-md border border-border bg-background px-3 text-[13px] placeholder:text-muted focus-visible:outline-2 focus-visible:outline-primary"
         />
         <button
@@ -279,7 +281,7 @@ function DirectoryEditor({
           className="inline-flex h-9 items-center gap-1.5 rounded-md bg-primary px-3 text-xs font-medium text-white hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50"
         >
           <FolderPlus className="size-3.5" aria-hidden="true" />
-          Add
+          Adicionar
         </button>
       </form>
     </div>
@@ -327,7 +329,7 @@ function LockedSafetySetting({ label, description }: { label: string; descriptio
         <p className="mt-0.5 text-xs leading-5 text-muted">{description}</p>
       </div>
       <span className="inline-flex shrink-0 items-center gap-1.5 rounded-md bg-hover px-2 py-1 text-[11px] font-medium text-secondary">
-        <LockKeyhole className="size-3" aria-hidden="true" /> Always on
+        <LockKeyhole className="size-3" aria-hidden="true" /> Sempre activo
       </span>
     </div>
   );

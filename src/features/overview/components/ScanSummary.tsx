@@ -9,9 +9,12 @@ export function ScanSummary({ projects }: { projects: Project[] }) {
   );
 
   return (
-    <section aria-label="Scan summary" className="flex gap-10 border-b border-border py-5">
-      <SummaryValue label="Projects found" value={String(projects.length)} />
-      <SummaryValue label="Potentially recoverable" value={formatBytes(recoverableBytes)} />
+    <section aria-label="Resumo da análise" className="flex gap-10 border-b border-border py-5">
+      <SummaryValue label="Projectos encontrados" value={String(projects.length)} />
+      <SummaryValue
+        label="Espaço potencialmente recuperável"
+        value={formatBytes(recoverableBytes)}
+      />
     </section>
   );
 }
