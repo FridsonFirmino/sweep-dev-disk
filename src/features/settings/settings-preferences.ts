@@ -1,4 +1,5 @@
 const storageKey = "sweep-dev-disk-scan-settings";
+const preferencesVersion = 2;
 
 export interface SettingsPreferences {
   projectDirectories: string[];
@@ -21,7 +22,8 @@ export function readSettingsPreferences(): SettingsPreferences {
     const parsed: unknown = JSON.parse(saved);
     if (!parsed || typeof parsed !== "object") return defaultSettingsPreferences;
 
-    const value = parsed as Partial<SettingsPreferences>;
+    const value = parsed as Partial<SettingsPreferences> & { version?: number };
+    const isCurrentVersion = value.version === preferencesVersion;
     return {
       projectDirectories: Array.isArray(value.projectDirectories)
         ? value.projectDirectories.filter((item): item is string => typeof item === "string")
@@ -30,7 +32,8 @@ export function readSettingsPreferences(): SettingsPreferences {
         ? value.excludedDirectories.filter((item): item is string => typeof item === "string")
         : [],
       followSymbolicLinks: value.followSymbolicLinks === true,
-      scanHiddenDirectories: value.scanHiddenDirectories !== false,
+      // Versões anteriores guardavam `false` como valor inicial, mesmo sem escolha do utilizador.
+      scanHiddenDirectories: isCurrentVersion ? value.scanHiddenDirectories !== false : true,
     };
   } catch {
     return defaultSettingsPreferences;
@@ -39,7 +42,10 @@ export function readSettingsPreferences(): SettingsPreferences {
 
 export function saveSettingsPreferences(preferences: SettingsPreferences) {
   try {
-    window.localStorage.setItem(storageKey, JSON.stringify(preferences));
+    window.localStorage.setItem(
+      storageKey,
+      JSON.stringify({ ...preferences, version: preferencesVersion }),
+    );
   } catch {
     // Preferences remain available for the current session if storage is unavailable.
   }
