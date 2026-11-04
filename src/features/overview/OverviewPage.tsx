@@ -12,7 +12,14 @@ import { ScanProgressView } from "@/features/overview/components/ScanProgressVie
 import { ScanSummary } from "@/features/overview/components/ScanSummary";
 import { readSettingsPreferences } from "@/features/settings/settings-preferences";
 import { cancelScan, cleanArtifacts, scanProjects } from "@/services/projects";
-import type { Artifact, CleanupResult, Project, ScanProgress, ScanWarning } from "@/types/domain";
+import type {
+  Artifact,
+  CleanupResult,
+  DiskSpace,
+  Project,
+  ScanProgress,
+  ScanWarning,
+} from "@/types/domain";
 import { useMemo, useRef, useState } from "react";
 
 type ScanState = "idle" | "scanning";
@@ -23,6 +30,7 @@ export function OverviewPage() {
   const [selectedArtifactIds, setSelectedArtifactIds] = useState<string[]>([]);
   const [scanState, setScanState] = useState<ScanState>("idle");
   const [progress, setProgress] = useState<ScanProgress | null>(null);
+  const [scannedDisks, setScannedDisks] = useState<DiskSpace[] | null>(null);
   const [scanWarnings, setScanWarnings] = useState<ScanWarning[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [reviewOpen, setReviewOpen] = useState(false);
@@ -45,6 +53,7 @@ export function OverviewPage() {
     setError(null);
     setCleanupResult(null);
     setScanWarnings([]);
+    setScannedDisks(null);
     setSelectedArtifactIds([]);
     setScanState("scanning");
     setProgress(null);
@@ -53,6 +62,7 @@ export function OverviewPage() {
     try {
       const result = await scanProjects(readSettingsPreferences(), setProgress, controller.signal);
       setProjects(result.projects);
+      setScannedDisks(result.disks);
       setSelectedProjectId(null);
       setScanWarnings(result.warnings);
     } catch (cause) {
@@ -127,11 +137,11 @@ export function OverviewPage() {
       {error && <ErrorNotice message={error} onDismiss={() => setError(null)} />}
       {scanWarnings.length > 0 && <ScanWarningsNotice warnings={scanWarnings} />}
       {cleanupResult && <CleanupSuccessNotice result={cleanupResult} />}
+      {scannedDisks && <ScanSummary projects={projects} disks={scannedDisks} />}
       {scanState === "scanning" && <ScanProgressView progress={progress} />}
 
       {projects.length > 0 ? (
         <>
-          <ScanSummary projects={projects} />
           <div
             className={`grid gap-6 pt-6 ${selectedProject ? "grid-cols-[minmax(0,1fr)_320px]" : "grid-cols-1"}`}
           >

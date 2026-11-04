@@ -20,8 +20,15 @@ export interface Project {
 
 export interface ScanResult {
   projects: Project[];
+  disks: DiskSpace[];
   completedAt: string;
   warnings: ScanWarning[];
+}
+
+export interface DiskSpace {
+  mountPath: string;
+  totalBytes: number;
+  availableBytes: number;
 }
 
 export interface ScanOptions {

@@ -87,8 +87,11 @@ O cancelamento é verificado entre entradas e directórios. Após o cancelamento
 Uma conclusão normal devolve `ScanResult` com:
 
 - `projects`: projectos detectados, com caminhos absolutos e artefactos encontrados;
+- `disks`: capacidade e espaço disponível, em bytes, nos volumes que contêm directórios de análise válidos; volumes repetidos são contados uma única vez;
 - `completedAt`: instante de conclusão em ISO 8601 UTC;
 - `warnings`: avisos não fatais, cada um com um `code` estável e um `path` opcional.
+
+O resumo apresenta a soma da capacidade e do espaço disponível nos volumes analisados. O espaço potencialmente recuperável é calculado a partir dos artefactos encontrados e não é subtraído do espaço disponível, porque a limpeza ainda não foi executada.
 
 Os códigos de aviso são `no_scan_directories`, `all_scan_directories_excluded`, `invalid_scan_directory`, `invalid_excluded_directory`, `directory_unavailable`, `symlink_outside_scan_roots`, `max_depth_reached`, `scan_limit_reached`, `size_overflow` e `warnings_truncated`. Um erro numa raiz não descarta resultados de outras raízes. Os códigos são identificadores de contrato; o frontend é responsável pelas mensagens em português.
 

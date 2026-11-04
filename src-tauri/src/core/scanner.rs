@@ -8,8 +8,9 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::{SystemTime, UNIX_EPOCH};
 
 use crate::models::{
-    Artifact, ArtifactRisk, Project, ScanOptions, ScanProgress, ScanResult, ScanWarning,
+    Artifact, ArtifactRisk, DiskSpace, Project, ScanOptions, ScanProgress, ScanResult, ScanWarning,
 };
+use sysinfo::Disks;
 
 // Limites globais da primeira versão; resultados parciais incluem avisos quando são atingidos.
 const MAX_DEPTH: usize = 64;
@@ -178,9 +179,41 @@ where
 
     Ok(ScanResult {
         projects: context.projects,
+        disks: disk_space_for_roots(&roots),
         completed_at: format_timestamp(SystemTime::now()),
         warnings: context.warnings,
     })
+}
+
+// Devolve uma entrada por volume que contém pelo menos uma raiz válida da análise.
+fn disk_space_for_roots(roots: &[PathBuf]) -> Vec<DiskSpace> {
+    let Ok(disks) = Disks::new_with_refreshed_list() else {
+        return Vec::new();
+    };
+
+    let mut seen_volumes = HashSet::new();
+    roots
+        .iter()
+        .filter_map(|root| {
+            let disk = disks
+                .iter()
+                .filter(|disk| path_is_within(root, disk.mount_point()))
+                .max_by_key(|disk| disk.mount_point().components().count())?;
+            let mount_path = disk.mount_point().to_path_buf();
+            let volume_id = disk
+                .id()
+                .map(|id| format!("id:{id}"))
+                .unwrap_or_else(|| format!("mount:{}", display_path(&mount_path)));
+            if !seen_volumes.insert(volume_id) {
+                return None;
+            }
+            Some(DiskSpace {
+                mount_path: display_path(&mount_path),
+                total_bytes: disk.total_space(),
+                available_bytes: disk.available_space(),
+            })
+        })
+        .collect()
 }
 
 impl<F> ScanContext<'_, F>

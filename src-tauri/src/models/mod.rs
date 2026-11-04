@@ -41,8 +41,18 @@ pub struct ScanWarning {
 #[serde(rename_all = "camelCase")]
 pub struct ScanResult {
     pub projects: Vec<Project>,
+    pub disks: Vec<DiskSpace>,
     pub completed_at: String,
     pub warnings: Vec<ScanWarning>,
+}
+
+/// Capacidade e espaço disponível no volume onde está um directório analisado.
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DiskSpace {
+    pub mount_path: String,
+    pub total_bytes: u64,
+    pub available_bytes: u64,
 }
 
 #[derive(Clone, Debug, Serialize)]
