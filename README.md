@@ -12,20 +12,22 @@ https://github.com/user-attachments/assets/4c7fb66b-1b7e-4646-804a-1e2372cf0183
 
 ## Objectivo do produto
 
-A aplicação deverá ajudar os programadores a identificar diretórios de projectos e a perceber o espaço ocupado por artefactos como `node_modules`, `.next`, resultados de compilação, diretórios `vendor` e caches de ferramentas. A limpeza manual e automática está planeada; nenhuma destas funcionalidades está implementada nesta fundação.
+A aplicação deverá ajudar os programadores a identificar diretórios de projectos e a perceber o espaço ocupado por artefactos como `node_modules`, `.next`, resultados de compilação, diretórios `vendor` e caches de ferramentas. A limpeza manual envia os artefactos seleccionados para o lixo do sistema após revalidação; a limpeza automática e o agendamento continuam planeados.
 
 ## Funcionalidades actuais (versão 1.0.0)
 
 - Análise só de leitura dos directórios configurados, com exclusões, política de ligações simbólicas e limites documentados em [docs/SCANNER.md](docs/SCANNER.md).
 - Painel de detalhe do projecto com os artefactos detectados, o nível de risco e uma nota de recuperação (`Reinstalável`, `Regenerável` ou `Requer revisão`), derivada do campo `recovery` de `src/data/supported-artifacts.json`.
 - Página "Artefactos suportados" com o catálogo completo do scanner, incluindo a coluna Recuperação com a mesma nota de cada artefacto.
+- Limpeza com revisão e simulação antes da confirmação, revalidação imediata dos destinos e envio para o lixo do sistema operativo, conforme [docs/CLEANUP.md](docs/CLEANUP.md).
+- Histórico local de limpezas com retenção e opção de anular a partir do lixo, quando a plataforma o permite.
 
 ## Tecnologias e arquitectura
 
-- Tauri 2 e Rust para a aplicação de ambiente de trabalho e futuras operações locais.
+- Tauri 2 e Rust para a aplicação de ambiente de desktop e operações locais de análise e limpeza.
 - React 19, TypeScript em modo strict, Vite 8, Tailwind CSS 4, aliases preparados para shadcn/ui, Lucide React, Vitest e React Testing Library.
-- SQLite está reservado para uma futura etapa de persistência; ainda não existe integração com uma base de dados nem esquema definido.
-- A comunicação entre a interface e o backend será feita através de comandos Tauri com permissões limitadas.
+- O histórico de limpezas usa um ficheiro JSON no directório de dados da aplicação; o SQLite continua reservado para uma futura etapa de persistência de negócio.
+- A comunicação entre a interface e o backend é feita através de comandos Tauri com permissões limitadas.
 
 Consulte [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) para mais informações.
 

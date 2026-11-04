@@ -83,3 +83,66 @@ pub enum ArtifactRisk {
     Low,
     Medium,
 }
+
+/// Artefactos escolhidos para uma operação de limpeza.
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CleanupSelection {
+    pub project_id: String,
+    pub artifact_ids: Vec<String>,
+}
+
+/// Pedido completo de limpeza; o backend revalida com as definições recebidas.
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CleanupRequest {
+    pub selection: CleanupSelection,
+    #[serde(default)]
+    pub project_directories: Vec<String>,
+    #[serde(default)]
+    pub excluded_directories: Vec<String>,
+    #[serde(default)]
+    pub dry_run: bool,
+}
+
+/// Falha isolada de um artefacto; não aborta o resto do pedido.
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CleanupFailure {
+    pub artifact_id: String,
+    pub code: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub message: Option<String>,
+}
+
+/// Resultado de uma limpeza ou simulação, com falhas parciais.
+#[derive(Clone, Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CleanupResult {
+    pub dry_run: bool,
+    pub removed_artifact_ids: Vec<String>,
+    pub would_remove_artifact_ids: Vec<String>,
+    pub reclaimed_bytes: u64,
+    pub failures: Vec<CleanupFailure>,
+}
+
+/// Entrada do histórico local de limpezas executadas.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CleanupHistoryEntry {
+    pub id: String,
+    pub finished_at: String,
+    pub project_id: String,
+    pub removed_artifact_ids: Vec<String>,
+    pub reclaimed_bytes: u64,
+    pub failure_count: usize,
+    pub restorable: bool,
+}
+
+/// Envelope versionado do ficheiro de histórico.
+#[derive(Clone, Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CleanupHistoryFile {
+    pub version: u32,
+    pub entries: Vec<CleanupHistoryEntry>,
+}

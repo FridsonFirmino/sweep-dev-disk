@@ -1,6 +1,7 @@
 import { AppLayout, type AppPage } from "@/components/layout/AppLayout";
 import { AboutPage } from "@/features/about/AboutPage";
 import { SupportedArtifactsPage } from "@/features/artifacts/SupportedArtifactsPage";
+import { CleanupHistoryPage } from "@/features/history/CleanupHistoryPage";
 import { OverviewPage } from "@/features/overview/OverviewPage";
 import { SettingsPage } from "@/features/settings/SettingsPage";
 import { useTheme } from "@/hooks/use-theme";
@@ -24,6 +25,8 @@ function App() {
         <OverviewPage />
       ) : page === "settings" ? (
         <SettingsPage preference={preference} onPreferenceChange={setPreference} />
+      ) : page === "history" ? (
+        <CleanupHistoryPage />
       ) : page === "about" ? (
         <AboutPage />
       ) : (

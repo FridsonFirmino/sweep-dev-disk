@@ -19,7 +19,7 @@
 - [x] Manter a confirmação e a validação antes da limpeza activas e bloqueadas na interface.
 - [x] Disponibilizar a selecção visual de português, inglês e espanhol, com português como predefinição.
 - [ ] Implementar a alteração efectiva do idioma.
-- [ ] Ligar as preferências de análise ao scanner e validar os caminhos antes de os utilizar.
+- [x] Ligar as preferências de análise ao scanner e validar os caminhos antes de os utilizar.
 
 ## Visão geral e integração do scanner
 
@@ -49,10 +49,14 @@
 
 - [x] Criar a revisão visual dos caminhos e a confirmação explícita antes da limpeza.
 - [x] Manter a confirmação e a revalidação activas na interface de definições.
-- [ ] Implementar a limpeza no backend com revalidação dos destinos imediatamente antes da remoção.
-- [ ] Adicionar modo de simulação e tratamento robusto de erros no backend.
-- [ ] Implementar o envio para o lixo adequado ao sistema operativo e verificar o comportamento alternativo.
-- [ ] Definir o histórico local de limpezas, retenção e opções para anular ou recuperar acções, quando possível.
+- [x] Criar o contrato da limpeza em [CLEANUP.md](CLEANUP.md).
+- [x] Implementar a limpeza no backend com revalidação dos destinos imediatamente antes da remoção.
+- [x] Adicionar modo de simulação e tratamento robusto de erros no backend.
+- [x] Implementar o envio para o lixo adequado ao sistema operativo e verificar o comportamento alternativo.
+- [x] Definir o histórico local de limpezas, retenção e opções para anular ou recuperar acções, quando possível.
+- [x] Ligar o comando ao fluxo de confirmação da interface e validar o resultado apresentado.
+- [x] Actualizar README, ARCHITECTURE, SECURITY, Definições e Acerca depois da limpeza estar disponível.
+- [x] Acrescentar testes de integração do backend e testes de interface do fluxo de limpeza.
 
 ## Funcionalidades futuras
 
@@ -62,7 +66,7 @@
 ## Testes e segurança
 
 - [ ] Modelar as ameaças nas fronteiras do sistema de ficheiros e do IPC.
-- [ ] Acrescentar testes de integração para casos limite do sistema de ficheiros.
+- [x] Acrescentar testes de integração para casos limite do sistema de ficheiros.
 - [ ] Auditar as capabilities do Tauri e as dependências.
 
 ## Distribuição para Ubuntu e Windows

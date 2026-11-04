@@ -161,7 +161,7 @@ export function AboutPage() {
         <AboutNote
           icon={<Code2 className="size-4" aria-hidden="true" />}
           title="Desenvolvimento em curso"
-          description="A interface está a ser desenvolvida por etapas; a análise de projectos e a limpeza ainda não estão disponíveis."
+          description="A análise de projectos e a limpeza para o lixo do sistema estão disponíveis; outras funcionalidades seguem em etapas."
         />
       </section>
 
