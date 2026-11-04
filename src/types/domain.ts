@@ -21,6 +21,19 @@ export interface Project {
 export interface ScanResult {
   projects: Project[];
   completedAt: string;
+  warnings: ScanWarning[];
+}
+
+export interface ScanOptions {
+  projectDirectories: string[];
+  excludedDirectories: string[];
+  followSymbolicLinks: boolean;
+  scanHiddenDirectories: boolean;
+}
+
+export interface ScanWarning {
+  code: string;
+  path?: string;
 }
 
 export interface ScanProgress {

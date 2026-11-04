@@ -99,11 +99,11 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
 
       <SettingsSection
         title="Análise"
-        description="Escolha onde procurar projectos e que directórios incluir. Estas preferências são guardadas localmente; a integração com o analisador ainda não está disponível."
+        description="Escolha os directórios que o scanner pode percorrer. Use um caminho absoluto, como /home/utilizador/Projectos, ou um caminho relativo à sua pasta pessoal, como ~/Projectos."
       >
         <DirectoryEditor
           title="Directórios dos projectos"
-          description="Directórios onde procurar projectos. Exemplos: ~/Projects, ~/Documents/GitHub, ~/Work."
+          description="Directórios onde procurar projectos. Exemplos: ~/Documentos/Projectos, ~/Documentos/GitHub, ~/Trabalho."
           placeholder="ex.: ~/Projects"
           directories={settings.projectDirectories}
           onAdd={(path) =>
@@ -182,8 +182,8 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
       </SettingsSection>
 
       <p className="mt-6 text-[11px] text-muted">
-        As preferências de análise e limpeza são guardadas localmente, mas não afectam as operações
-        enquanto não for implementada a integração com o serviço Rust.
+        Os directórios de análise são utilizados pelo scanner. As opções de limpeza ainda não estão
+        ligadas ao serviço do sistema.
       </p>
     </div>
   );

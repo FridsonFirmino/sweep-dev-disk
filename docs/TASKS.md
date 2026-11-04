@@ -22,35 +22,33 @@
 - [ ] Implementar a alteração efectiva do idioma.
 - [ ] Ligar as preferências de análise ao scanner e validar os caminhos antes de os utilizar.
 
-## Visão geral e dados de demonstração
+## Visão geral e integração do scanner
 
 - [x] Criar a lista de projectos, o resumo de espaço, os detalhes dos projectos e a lista de artefactos.
 - [x] Criar o estado vazio, o indicador de progresso e a apresentação de erros.
-- [x] Adicionar dados de demonstração e estados simulados para desenvolvimento (`?demo=results` e `?demo=error`).
 - [x] Permitir seleccionar artefactos e rever caminhos numa janela de confirmação antes da limpeza.
-- [x] Criar testes de interface para navegação, definições, dados de demonstração, informações da aplicação e erros simulados.
-- [ ] Substituir os dados de demonstração por resultados reais do scanner.
+- [x] Criar testes de interface para navegação, definições e informações da aplicação.
+- [x] Ligar o painel aos resultados reais do scanner.
 - [ ] Verificar acessibilidade e comportamento da interface em diferentes resoluções e sistemas operativos.
 
 ## Scanner de projectos
 
 - [x] Definir o comportamento de análise, cancelamento e utilização dos directórios configurados em [SCANNER.md](SCANNER.md).
-- [ ] Implementar um scanner só de leitura, com utilização limitada de recursos.
-- [ ] Abranger permissões, directórios inacessíveis, ligações simbólicas e directórios excluídos.
-- [ ] Definir os marcadores de projecto suportados e detectar raízes sem percorrer caminhos excluídos.
+- [x] Implementar um scanner só de leitura, com utilização limitada de recursos.
+- [x] Abranger permissões, directórios inacessíveis, ligações simbólicas e directórios excluídos.
+- [x] Definir os marcadores de projecto suportados e detectar raízes sem percorrer caminhos excluídos.
 
 ## Detecção de artefactos e análise do armazenamento
 
-- [ ] Definir padrões integrados para directórios de artefactos.
+- [x] Definir padrões integrados para directórios de artefactos.
 - [ ] Apresentar a evidência e o nível de confiança de cada correspondência.
-- [ ] Calcular tamanhos com segurança e documentar o tratamento de hard links e ligações simbólicas.
-- [ ] Ligar o progresso e os erros apresentados na interface ao processo real de análise.
+- [ ] Calcular tamanhos sem sobrecontar hard links e documentar o espaço realmente recuperável.
+- [x] Ligar o progresso e os avisos apresentados na interface ao processo real de análise.
 
 ## Limpeza
 
 - [x] Criar a revisão visual dos caminhos e a confirmação explícita antes da limpeza.
 - [x] Manter a confirmação e a revalidação activas na interface de definições.
-- [x] Simular a remoção dos artefactos nos dados de demonstração.
 - [ ] Implementar a limpeza no backend com revalidação dos destinos imediatamente antes da remoção.
 - [ ] Adicionar modo de simulação e tratamento robusto de erros no backend.
 - [ ] Implementar o envio para o lixo adequado ao sistema operativo e verificar o comportamento alternativo.
