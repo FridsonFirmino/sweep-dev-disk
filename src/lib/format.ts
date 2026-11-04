@@ -7,5 +7,7 @@ export function formatBytes(bytes: number): string {
 }
 
 export function formatActivity(value: string): string {
-  return new Intl.DateTimeFormat("en-GB", { dateStyle: "medium" }).format(new Date(value));
+  return new Intl.DateTimeFormat("pt-PT", { dateStyle: "medium", timeStyle: "short" }).format(
+    new Date(value),
+  );
 }

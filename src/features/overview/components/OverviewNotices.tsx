@@ -1,19 +1,6 @@
-import { AlertTriangle, CheckCircle2, X } from "lucide-react";
 import { formatBytes } from "@/lib/format";
-import type { CleanupResult } from "@/types/domain";
-
-export function DemoNotice() {
-  if (!import.meta.env.DEV || !new URLSearchParams(window.location.search).has("demo")) {
-    return null;
-  }
-
-  return (
-    <p className="mt-4 inline-flex items-center gap-1.5 rounded-md border border-border bg-surface px-2.5 py-1.5 text-[11px] text-secondary">
-      <AlertTriangle className="size-3.5" aria-hidden="true" />
-      Dados de demonstração — não estão a ser analisadas pastas reais.
-    </p>
-  );
-}
+import type { CleanupResult, ScanWarning } from "@/types/domain";
+import { AlertTriangle, CheckCircle2, X } from "lucide-react";
 
 export function ErrorNotice({ message, onDismiss }: { message: string; onDismiss: () => void }) {
   return (
@@ -32,6 +19,50 @@ export function ErrorNotice({ message, onDismiss }: { message: string; onDismiss
       >
         <X className="size-4" aria-hidden="true" />
       </button>
+    </div>
+  );
+}
+
+export function ScanWarningsNotice({ warnings }: { warnings: ScanWarning[] }) {
+  const messages = warnings.map((warning) => {
+    const path = warning.path ? ` (${warning.path})` : "";
+    switch (warning.code) {
+      case "no_scan_directories":
+        return "Adicione pelo menos um directório de projectos nas Definições.";
+      case "all_scan_directories_excluded":
+        return "Todos os directórios de projectos estão excluídos da análise.";
+      case "invalid_scan_directory":
+        return `O directório de análise não é válido ou não está disponível${path}.`;
+      case "invalid_excluded_directory":
+        return `O directório excluído não é válido${path}.`;
+      case "directory_unavailable":
+        return `Não foi possível aceder a um directório durante a análise${path}.`;
+      case "symlink_outside_scan_roots":
+        return `Foi ignorada uma ligação simbólica para fora dos directórios seleccionados${path}.`;
+      case "max_depth_reached":
+        return `Foi atingida a profundidade máxima de análise${path}.`;
+      case "scan_limit_reached":
+        return "A análise atingiu o limite de entradas e foi concluída parcialmente.";
+      case "size_overflow":
+        return `O tamanho deste artefacto excede o limite de apresentação${path}.`;
+      case "warnings_truncated":
+        return "Existem mais avisos, a interface mostra apenas os primeiros.";
+      default:
+        return `A análise encontrou um aviso${path}.`;
+    }
+  });
+
+  return (
+    <div
+      role="status"
+      className="mt-4 rounded-md border border-warning/30 bg-warning/10 p-3 text-[13px] text-warning"
+    >
+      <p className="font-medium">A análise foi concluída com avisos.</p>
+      <ul className="mt-1 list-inside list-disc space-y-1">
+        {messages.map((message, index) => (
+          <li key={`${index}-${message}`}>{message}</li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { ChevronRight, Folder } from "lucide-react";
-import { formatBytes } from "@/lib/format";
+import { formatActivity, formatBytes } from "@/lib/format";
 import type { Project } from "@/types/domain";
 
 interface ProjectRowProps {
@@ -19,7 +19,7 @@ export function ProjectRow({ project, selected, onClick }: ProjectRowProps) {
       type="button"
       onClick={onClick}
       aria-expanded={selected}
-      className={`grid w-full grid-cols-[minmax(0,1fr)_150px_92px_110px_20px] items-center gap-4 px-3.5 py-3 text-left focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-primary ${selected ? "bg-selected" : "hover:bg-hover"}`}
+      className={`grid w-full grid-cols-[minmax(0,1fr)_130px_140px_92px_110px_20px] items-center gap-3 px-3.5 py-3 text-left focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-primary ${selected ? "bg-selected" : "hover:bg-hover"}`}
     >
       <span className="flex min-w-0 items-center gap-3">
         <Folder className="size-4 shrink-0 text-secondary" aria-hidden="true" />
@@ -36,6 +36,9 @@ export function ProjectRow({ project, selected, onClick }: ProjectRowProps) {
       <span className="truncate text-xs text-secondary" title={project.technology}>
         {project.technology}
       </span>
+      <time className="text-xs text-secondary" dateTime={project.lastActivity}>
+        {formatActivity(project.lastActivity)}
+      </time>
       <span className="text-xs text-secondary">{project.artifacts.length} artefactos</span>
       <span className="text-right text-xs font-medium tabular-nums">
         {formatBytes(reclaimable)}

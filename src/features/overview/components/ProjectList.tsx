@@ -17,9 +17,10 @@ export function ProjectList({ projects, selectedProjectId, onSelect }: ProjectLi
         <span className="text-xs text-muted">Ordenados pela actividade recente</span>
       </div>
       <div className="divide-y divide-border rounded-md border border-border">
-        <div className="grid grid-cols-[minmax(0,1fr)_150px_92px_110px_20px] gap-4 bg-sidebar px-3.5 py-2 text-[10px] font-medium uppercase tracking-wide text-muted">
+        <div className="grid grid-cols-[minmax(0,1fr)_130px_140px_92px_110px_20px] gap-3 bg-sidebar px-3.5 py-2 text-[10px] font-medium uppercase tracking-wide text-muted">
           <span>Projecto</span>
           <span>Tecnologia</span>
+          <span>Última alteração</span>
           <span>Artefactos</span>
           <span className="text-right">Recuperável</span>
           <span />

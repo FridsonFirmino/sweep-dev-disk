@@ -24,15 +24,6 @@ describe("App", () => {
     expect(document.documentElement.dataset.theme).toBe("light");
   });
 
-  it("shows clearly labelled development fixture results", () => {
-    window.history.replaceState({}, "", "/?demo=results");
-    render(<App />);
-    expect(screen.getByText(/Dados de demonstração/)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Projectos" })).toBeInTheDocument();
-    expect(screen.getByText("notes-app")).toBeInTheDocument();
-    window.history.replaceState({}, "", "/");
-  });
-
   it("opens About and displays system and developer information", () => {
     render(<App />);
     fireEvent.click(screen.getByRole("button", { name: "Acerca de" }));
@@ -43,15 +34,5 @@ describe("App", () => {
       "href",
       "https://github.com/FridsonFirmino",
     );
-  });
-
-  it("shows scan errors from the development fixture", async () => {
-    window.history.replaceState({}, "", "/?demo=error");
-    render(<App />);
-    fireEvent.click(screen.getAllByRole("button", { name: "Analisar projectos" })[0]);
-    expect(await screen.findByRole("alert")).toHaveTextContent(
-      /o acesso à pasta seleccionada foi recusado/,
-    );
-    window.history.replaceState({}, "", "/");
   });
 });

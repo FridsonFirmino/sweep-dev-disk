@@ -16,9 +16,12 @@
         "title": "SweepDevDisk",
         "width": 1100,
         "height": 750,
+        "maximized": true,
+        "fullscreen": false,
+        "decorations": true,
         "backgroundColor": "#1f1f1f",
-        "minWidth": 900,
-        "minHeight": 600,
+        "minWidth": 1100,
+        "minHeight": 750,
         "resizable": true
       }
     ],

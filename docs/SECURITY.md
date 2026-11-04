@@ -10,4 +10,4 @@ Os responsáveis pela manutenção irão acusar a recepção e avaliar a denúnc
 
 O SweepDevDisk deverá continuar a funcionar localmente. As operações no sistema de ficheiros têm de respeitar o princípio do menor privilégio, validar caminhos canónicos, impedir path traversal, tratar explicitamente as ligações simbólicas e voltar a validar os destinos imediatamente antes de qualquer operação destrutiva. As acções destrutivas devem ser explícitas, verificáveis e, sempre que possível, reversíveis. Proteja os caminhos do utilizador e o histórico de análise; não os envie para serviços remotos sem uma decisão de produto analisada separadamente.
 
-A fundação actual não executa operações no sistema de ficheiros e não concede permissões Tauri para esse efeito.
+A aplicação inclui um scanner Rust só de leitura, limitado aos directórios escolhidos e às exclusões definidas pelo utilizador. A webview não recebe permissões directas de acesso ao sistema de ficheiros. A limpeza e outras operações destrutivas ainda não estão implementadas.

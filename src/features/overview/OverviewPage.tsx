@@ -1,27 +1,37 @@
-import { useMemo, useRef, useState } from "react";
 import { CleanupReviewDialog } from "@/features/overview/components/CleanupReviewDialog";
 import { EmptyState } from "@/features/overview/components/EmptyState";
 import { OverviewHeader } from "@/features/overview/components/OverviewHeader";
 import {
   CleanupSuccessNotice,
-  DemoNotice,
   ErrorNotice,
+  ScanWarningsNotice,
 } from "@/features/overview/components/OverviewNotices";
 import { ProjectDetails } from "@/features/overview/components/ProjectDetails";
 import { ProjectList } from "@/features/overview/components/ProjectList";
 import { ScanProgressView } from "@/features/overview/components/ScanProgressView";
 import { ScanSummary } from "@/features/overview/components/ScanSummary";
-import { cancelScan, cleanArtifacts, getInitialProjects, scanProjects } from "@/services/projects";
-import type { Artifact, CleanupResult, Project, ScanProgress } from "@/types/domain";
+import { readSettingsPreferences } from "@/features/settings/settings-preferences";
+import { cancelScan, cleanArtifacts, scanProjects } from "@/services/projects";
+import type {
+  Artifact,
+  CleanupResult,
+  DiskSpace,
+  Project,
+  ScanProgress,
+  ScanWarning,
+} from "@/types/domain";
+import { useMemo, useRef, useState } from "react";
 
 type ScanState = "idle" | "scanning";
 
 export function OverviewPage() {
-  const [projects, setProjects] = useState<Project[]>(getInitialProjects);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [selectedArtifactIds, setSelectedArtifactIds] = useState<string[]>([]);
   const [scanState, setScanState] = useState<ScanState>("idle");
   const [progress, setProgress] = useState<ScanProgress | null>(null);
+  const [scannedDisks, setScannedDisks] = useState<DiskSpace[] | null>(null);
+  const [scanWarnings, setScanWarnings] = useState<ScanWarning[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [reviewOpen, setReviewOpen] = useState(false);
   const [cleanupResult, setCleanupResult] = useState<CleanupResult | null>(null);
@@ -42,15 +52,19 @@ export function OverviewPage() {
   async function startScan() {
     setError(null);
     setCleanupResult(null);
+    setScanWarnings([]);
+    setScannedDisks(null);
     setSelectedArtifactIds([]);
     setScanState("scanning");
     setProgress(null);
     const controller = new AbortController();
     controllerRef.current = controller;
     try {
-      const result = await scanProjects(setProgress, controller.signal);
+      const result = await scanProjects(readSettingsPreferences(), setProgress, controller.signal);
       setProjects(result.projects);
+      setScannedDisks(result.disks);
       setSelectedProjectId(null);
+      setScanWarnings(result.warnings);
     } catch (cause) {
       if (!(cause instanceof DOMException && cause.name === "AbortError")) {
         setError(
@@ -71,10 +85,8 @@ export function OverviewPage() {
     try {
       await cancelScan();
     } catch {
-      // The backend may not implement cancellation in this build yet.
+      // Keep the interface responsive if cancellation itself fails.
     }
-    setScanState("idle");
-    setProgress(null);
   }
 
   function toggleArtifact(artifact: Artifact) {
@@ -115,40 +127,44 @@ export function OverviewPage() {
   }
 
   return (
-    <div className="mx-auto max-w-[1440px] px-8 py-8">
+    <div className="mx-auto max-w-360 px-8 py-8">
       <OverviewHeader
         scanning={scanState === "scanning"}
         hasProjects={projects.length > 0}
         onScan={startScan}
         onCancel={stopScan}
       />
-      <DemoNotice />
       {error && <ErrorNotice message={error} onDismiss={() => setError(null)} />}
+      {scanWarnings.length > 0 && <ScanWarningsNotice warnings={scanWarnings} />}
       {cleanupResult && <CleanupSuccessNotice result={cleanupResult} />}
+      {scannedDisks && <ScanSummary projects={projects} disks={scannedDisks} />}
       {scanState === "scanning" && <ScanProgressView progress={progress} />}
 
       {projects.length > 0 ? (
         <>
-          <ScanSummary projects={projects} />
           <div
-            className={`grid gap-6 pt-6 ${selectedProject ? "grid-cols-[minmax(0,1fr)_320px]" : "grid-cols-1"}`}
+            className={`grid min-w-0 grid-cols-1 gap-6 pt-6 ${selectedProject ? "2xl:grid-cols-[minmax(0,1fr)_320px]" : ""}`}
           >
-            <ProjectList
-              projects={orderedProjects}
-              selectedProjectId={selectedProjectId}
-              onSelect={(projectId) => {
-                setSelectedProjectId(projectId);
-                setSelectedArtifactIds([]);
-              }}
-            />
             {selectedProject && (
-              <ProjectDetails
-                project={selectedProject}
-                selectedIds={selectedArtifactIds}
-                onToggle={toggleArtifact}
-                onReview={() => setReviewOpen(true)}
-              />
+              <div className="2xl:order-2">
+                <ProjectDetails
+                  project={selectedProject}
+                  selectedIds={selectedArtifactIds}
+                  onToggle={toggleArtifact}
+                  onReview={() => setReviewOpen(true)}
+                />
+              </div>
             )}
+            <div className="min-w-0 2xl:order-1">
+              <ProjectList
+                projects={orderedProjects}
+                selectedProjectId={selectedProjectId}
+                onSelect={(projectId) => {
+                  setSelectedProjectId(projectId);
+                  setSelectedArtifactIds([]);
+                }}
+              />
+            </div>
           </div>
         </>
       ) : scanState === "idle" && !error ? (
