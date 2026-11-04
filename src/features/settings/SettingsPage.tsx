@@ -99,12 +99,12 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
 
       <SettingsSection
         title="Análise"
-        description="Escolha os directórios que o scanner pode percorrer. Use um caminho absoluto, como /home/utilizador/Projectos, ou um caminho relativo à sua pasta pessoal, como ~/Projectos."
+        description="Escolha os directórios que o scanner pode percorrer. Ubuntu: /home/utilizador/Projectos ou ~/Projectos. Windows: C:\\Users\\Utilizador\\Projects ou ~/Projects."
       >
         <DirectoryEditor
           title="Directórios dos projectos"
-          description="Directórios onde procurar projectos. Exemplos: ~/Documentos/Projectos, ~/Documentos/GitHub, ~/Trabalho."
-          placeholder="ex.: ~/Projects"
+          description="Ubuntu: ~/Documentos/Projectos, ~/Documentos/GitHub. Windows: ~/Documents/Projects ou C:\\Users\\Utilizador\\Documents\\Projects."
+          placeholder="ex.: ~/Documentos/Projectos"
           directories={settings.projectDirectories}
           onAdd={(path) =>
             update("projectDirectories", addUnique(settings.projectDirectories, path))
