@@ -5,7 +5,7 @@ import {
 } from "@/features/settings/settings-preferences";
 import type { ThemePreference } from "@/hooks/use-theme";
 import { FolderPlus, Languages, LockKeyhole, Monitor, Moon, Sun, Trash2, X } from "lucide-react";
-import type { FormEvent, ReactNode } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
 import { useEffect, useState } from "react";
 
 interface SettingsPageProps {
@@ -41,7 +41,7 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-8 py-8">
+    <div className="mx-auto max-w-360 px-8 py-8">
       <header className="mb-7 border-b border-border pb-5">
         <h1 className="text-2xl font-semibold tracking-tight">Definições</h1>
         <p className="mt-1.5 text-[13px] text-secondary">
@@ -99,12 +99,12 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
 
       <SettingsSection
         title="Análise"
-        description="Escolha onde procurar projectos e que directórios incluir. Estas preferências são guardadas localmente; a integração com o analisador ainda não está disponível."
+        description="Escolha os directórios que o scanner pode percorrer. Ubuntu: /home/utilizador/Projectos ou ~/Projectos. Windows: C:\\Users\\Utilizador\\Projects ou ~/Projects."
       >
         <DirectoryEditor
           title="Directórios dos projectos"
-          description="Directórios onde procurar projectos. Exemplos: ~/Projects, ~/Documents/GitHub, ~/Work."
-          placeholder="ex.: ~/Projects"
+          description="Ubuntu: ~/Documentos/Projectos, ~/Documentos/GitHub. Windows: ~/Documents/Projects ou C:\\Users\\Utilizador\\Documents\\Projects."
+          placeholder="ex.: ~/Documentos/Projectos"
           directories={settings.projectDirectories}
           onAdd={(path) =>
             update("projectDirectories", addUnique(settings.projectDirectories, path))
@@ -140,7 +140,7 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
           />
           <SwitchSetting
             label="Analisar directórios ocultos"
-            description="Incluir directórios ocultos na análise de projectos."
+            description="Incluir directórios ocultos na análise de projectos. Activado por predefinição."
             checked={settings.scanHiddenDirectories}
             onChange={(checked) => update("scanHiddenDirectories", checked)}
           />
@@ -182,8 +182,8 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
       </SettingsSection>
 
       <p className="mt-6 text-[11px] text-muted">
-        As preferências de análise e limpeza são guardadas localmente, mas não afectam as operações
-        enquanto não for implementada a integração com o serviço Rust.
+        Os directórios de análise são utilizados pelo scanner. As opções de limpeza ainda não estão
+        ligadas ao serviço do sistema.
       </p>
     </div>
   );
@@ -231,12 +231,18 @@ function DirectoryEditor({
 }) {
   const [value, setValue] = useState("");
 
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function addPath() {
     const path = value.trim();
     if (!path) return;
     onAdd(path);
     setValue("");
+  }
+
+  function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addPath();
+    }
   }
 
   return (
@@ -267,23 +273,26 @@ function DirectoryEditor({
           Ainda não foram adicionados directórios.
         </p>
       )}
-      <form onSubmit={submit} className="flex gap-2">
+      <div className="flex gap-2">
         <input
+          type="text"
           value={value}
           onChange={(event) => setValue(event.currentTarget.value)}
+          onKeyDown={handleInputKeyDown}
           placeholder={placeholder}
           aria-label={`Caminho para ${title.toLowerCase()}`}
           className="h-9 min-w-0 flex-1 rounded-md border border-border bg-background px-3 text-[13px] placeholder:text-muted focus-visible:outline-2 focus-visible:outline-primary"
         />
         <button
-          type="submit"
+          type="button"
           disabled={!value.trim()}
+          onClick={addPath}
           className="inline-flex h-9 items-center gap-1.5 rounded-md bg-primary px-3 text-xs font-medium text-white hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50"
         >
           <FolderPlus className="size-3.5" aria-hidden="true" />
           Adicionar
         </button>
-      </form>
+      </div>
     </div>
   );
 }
@@ -314,7 +323,8 @@ function SwitchSetting({
         className={`relative h-5 w-9 shrink-0 rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${checked ? "bg-primary" : "bg-hover ring-1 ring-border"}`}
       >
         <span
-          className={`absolute top-0.5 size-4 rounded-full bg-white shadow-sm transition-transform ${checked ? "translate-x-[18px]" : "translate-x-0.5"}`}
+          aria-hidden="true"
+          className={`absolute left-0.5 top-0.5 size-4 rounded-full bg-white shadow-sm transition-transform duration-150 ${checked ? "translate-x-4" : "translate-x-0"}`}
         />
       </button>
     </div>

@@ -1,1 +1,1 @@
-//! Application logic, independent of the Tauri UI layer.
+pub mod scanner;
