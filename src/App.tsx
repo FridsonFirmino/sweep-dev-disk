@@ -15,7 +15,7 @@ function App() {
     const bootScreen = document.getElementById("boot-screen");
     if (!bootScreen) return;
 
-    const timeout = window.setTimeout(() => bootScreen.remove(), 3500);
+    const timeout = window.setTimeout(() => bootScreen.remove(), 1500);
     return () => window.clearTimeout(timeout);
   }, []);
 
