@@ -1,7 +1,12 @@
 import { formatBytes } from "@/lib/format";
 import type { DiskSpace, Project } from "@/types/domain";
 
-export function ScanSummary({ projects, disks }: { projects: Project[]; disks: DiskSpace[] }) {
+interface ScanSummaryProps {
+  projects: Project[];
+  disks: DiskSpace[];
+}
+
+export function ScanSummary({ projects, disks }: ScanSummaryProps) {
   const recoverableBytes = projects.reduce(
     (total, project) =>
       total + project.artifacts.reduce((sum, artifact) => sum + artifact.reclaimableBytes, 0),

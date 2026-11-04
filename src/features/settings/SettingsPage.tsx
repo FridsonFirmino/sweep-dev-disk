@@ -5,7 +5,7 @@ import {
 } from "@/features/settings/settings-preferences";
 import type { ThemePreference } from "@/hooks/use-theme";
 import { FolderPlus, Languages, LockKeyhole, Monitor, Moon, Sun, Trash2, X } from "lucide-react";
-import type { FormEvent, ReactNode } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
 import { useEffect, useState } from "react";
 
 interface SettingsPageProps {
@@ -231,12 +231,18 @@ function DirectoryEditor({
 }) {
   const [value, setValue] = useState("");
 
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function addPath() {
     const path = value.trim();
     if (!path) return;
     onAdd(path);
     setValue("");
+  }
+
+  function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addPath();
+    }
   }
 
   return (
@@ -267,23 +273,26 @@ function DirectoryEditor({
           Ainda não foram adicionados directórios.
         </p>
       )}
-      <form onSubmit={submit} className="flex gap-2">
+      <div className="flex gap-2">
         <input
+          type="text"
           value={value}
           onChange={(event) => setValue(event.currentTarget.value)}
+          onKeyDown={handleInputKeyDown}
           placeholder={placeholder}
           aria-label={`Caminho para ${title.toLowerCase()}`}
           className="h-9 min-w-0 flex-1 rounded-md border border-border bg-background px-3 text-[13px] placeholder:text-muted focus-visible:outline-2 focus-visible:outline-primary"
         />
         <button
-          type="submit"
+          type="button"
           disabled={!value.trim()}
+          onClick={addPath}
           className="inline-flex h-9 items-center gap-1.5 rounded-md bg-primary px-3 text-xs font-medium text-white hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50"
         >
           <FolderPlus className="size-3.5" aria-hidden="true" />
           Adicionar
         </button>
-      </form>
+      </div>
     </div>
   );
 }
