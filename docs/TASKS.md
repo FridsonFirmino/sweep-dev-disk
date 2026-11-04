@@ -41,6 +41,7 @@
 ## Detecção de artefactos e análise do armazenamento
 
 - [x] Definir padrões integrados para directórios de artefactos.
+- [x] Apresentar o campo `recovery` de cada artefacto: nota no detalhe do projecto e coluna Recuperação na página de artefactos suportados.
 - [ ] Apresentar a evidência e o nível de confiança de cada correspondência.
 - [ ] Calcular tamanhos sem sobrecontar hard links e documentar o espaço realmente recuperável.
 - [x] Ligar o progresso e os avisos apresentados na interface ao processo real de análise.

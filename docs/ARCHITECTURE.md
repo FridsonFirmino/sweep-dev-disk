@@ -7,6 +7,7 @@ A aplicação é uma estrutura de ambiente de trabalho Tauri 2, local e autónom
 ## Responsabilidades
 
 - `src/`: apresentação, componentes de interface, futuras funcionalidades e testes do frontend.
+- `src/data/`: catálogo partilhado de artefactos suportados, lido pelo scanner Rust (`include_str!`) e pelas páginas React (import directo do JSON).
 - `src-tauri/src/commands`: adaptadores de pedido e resposta, com âmbito limitado, expostos à webview.
 - `src-tauri/src/core`: futura lógica da aplicação, independente do Tauri.
 - `src-tauri/src/database`: futura camada de persistência local.

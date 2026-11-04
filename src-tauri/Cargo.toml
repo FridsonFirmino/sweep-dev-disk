@@ -1,6 +1,6 @@
 [package]
 name = "sweep-dev-disk"
-version = "0.1.0"
+version = "1.0.0"
 description = "Local-first disk usage auditing foundation for development artifacts"
 authors = []
 edition = "2024"

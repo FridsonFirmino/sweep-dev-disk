@@ -14,6 +14,12 @@ https://github.com/user-attachments/assets/4c7fb66b-1b7e-4646-804a-1e2372cf0183
 
 A aplicação deverá ajudar os programadores a identificar diretórios de projectos e a perceber o espaço ocupado por artefactos como `node_modules`, `.next`, resultados de compilação, diretórios `vendor` e caches de ferramentas. A limpeza manual e automática está planeada; nenhuma destas funcionalidades está implementada nesta fundação.
 
+## Funcionalidades actuais (versão 1.0.0)
+
+- Análise só de leitura dos directórios configurados, com exclusões, política de ligações simbólicas e limites documentados em [docs/SCANNER.md](docs/SCANNER.md).
+- Painel de detalhe do projecto com os artefactos detectados, o nível de risco e uma nota de recuperação (`Reinstalável`, `Regenerável` ou `Requer revisão`), derivada do campo `recovery` de `src/data/supported-artifacts.json`.
+- Página "Artefactos suportados" com o catálogo completo do scanner, incluindo a coluna Recuperação com a mesma nota de cada artefacto.
+
 ## Tecnologias e arquitectura
 
 - Tauri 2 e Rust para a aplicação de ambiente de trabalho e futuras operações locais.
