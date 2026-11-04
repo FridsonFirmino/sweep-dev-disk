@@ -110,7 +110,7 @@ export function AboutPage() {
             <img
               src={developer.imageUrl}
               alt={`Fotografia de perfil de ${developer.name}`}
-              className="size-16 rounded-full object-cover"
+              className="size-1/12 rounded-full object-cover"
             />
           ) : (
             <div
@@ -155,13 +155,13 @@ export function AboutPage() {
       <section aria-label="Informações do projecto" className="mt-7 grid gap-3 sm:grid-cols-2">
         <AboutNote
           icon={<LockKeyhole className="size-4" aria-hidden="true" />}
-          title="Concebido para utilização local"
-          description="Os caminhos dos projectos e as operações de limpeza destinam-se a permanecer no seu dispositivo. Não está configurado nenhum serviço remoto."
+          title="Feito para uso local"
+          description="Os caminhos dos projectos e as operações de limpeza são exculivos do teu dispositivo. Não está configurado nenhum serviço remoto."
         />
         <AboutNote
           icon={<Code2 className="size-4" aria-hidden="true" />}
           title="Desenvolvimento em curso"
-          description="A análise de projectos e a limpeza para o lixo do sistema estão disponíveis; outras funcionalidades seguem em etapas."
+          description="A análise de projectos e a limpeza já estão disponíveis,  outras funcionalidades seram adicionadas em breve."
         />
       </section>
 

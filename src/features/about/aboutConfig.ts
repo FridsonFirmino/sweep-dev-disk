@@ -6,7 +6,7 @@ export const aboutConfig = {
   developer: {
     name: "Fridson Firmino",
     title: "Engenheiro de software",
-    imageUrl: null as string | null,
+    imageUrl: "/avatar.png" as string | null,
     socialLinks: [
       {
         label: "GitHub",
