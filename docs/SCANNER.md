@@ -50,7 +50,7 @@ Os nomes no IPC usam camelCase, correspondendo a `SettingsPreferences` no fronte
 
 Um directório é considerado projecto quando contém pelo menos um dos seguintes marcadores: `package.json` (Node.js), `Cargo.toml` (Rust), `pyproject.toml` ou `requirements.txt` (Python), `go.mod` (Go), `composer.json` (PHP), `Gemfile` (Ruby), `pom.xml` (Java/Maven), `build.gradle` (Java/Kotlin), `build.gradle.kts` (Kotlin), `mix.exs` (Elixir), `pubspec.yaml` (Dart/Flutter), `CMakeLists.txt` (C/C++) ou um ficheiro `.csproj`/`.sln` (C#/.NET). O nome do projecto é o nome do directório; a tecnologia apresenta os marcadores reconhecidos.
 
-Dentro de um projecto, os seguintes nomes de directório são reconhecidos como artefactos: `node_modules`, `.next`, `__pycache__`, `.venv`, `venv`, `coverage`, `.gradle`, `Pods`, `DerivedData`, `target`, `dist`, `build` e `vendor`. Os primeiros nove têm risco `low`; `target`, `dist`, `build` e `vendor` têm risco `medium`. Ao encontrar um artefacto, o scanner mede-o e não percorre o seu conteúdo à procura de projectos.
+Dentro de um projecto, o scanner reconhece os directórios definidos em `src/data/supported-artifacts.json`. Esse catálogo é partilhado com a página Artefactos e contém os nomes, categorias, descrições e níveis de risco. Ao encontrar um artefacto, o scanner mede-o e não percorre o seu conteúdo à procura de projectos.
 
 A medição de um artefacto inclui também os seus subdirectórios ocultos, como `.pnpm` dentro de `node_modules`. A preferência para analisar directórios ocultos controla a descoberta de projectos fora dos artefactos. Ligações simbólicas dentro dos artefactos continuam a respeitar a preferência de as seguir e o limite das raízes analisadas.
 

@@ -1,0 +1,114 @@
+[
+  {
+    "name": "node_modules",
+    "category": "Dependências",
+    "description": "Dependências instaladas para projectos JavaScript e TypeScript.",
+    "risk": "low",
+    "recovery": "reinstallable"
+  },
+  {
+    "name": ".next",
+    "category": "Compilação",
+    "description": "Ficheiros de compilação e cache criados pelo Next.js.",
+    "risk": "low",
+    "recovery": "regenerable"
+  },
+  {
+    "name": ".bundle",
+    "category": "Bundler (Ruby)",
+    "description": "Configuração local e, conforme a configuração do Bundler, dependências instaladas; rever antes de remover.",
+    "risk": "medium",
+    "recovery": "review"
+  },
+  {
+    "name": ".dart_tool",
+    "category": "Flutter / Dart",
+    "description": "Metadados e ficheiros locais do pub, recriados ao resolver as dependências.",
+    "risk": "low",
+    "recovery": "regenerable"
+  },
+  {
+    "name": "__pycache__",
+    "category": "Cache Python",
+    "description": "Bytecode Python gerado durante a execução ou importação de módulos.",
+    "risk": "low",
+    "recovery": "regenerable"
+  },
+  {
+    "name": ".venv",
+    "category": "Ambiente Python",
+    "description": "Ambiente virtual Python criado dentro do projecto.",
+    "risk": "low",
+    "recovery": "reinstallable"
+  },
+  {
+    "name": "venv",
+    "category": "Ambiente Python",
+    "description": "Ambiente virtual Python criado dentro do projecto.",
+    "risk": "low",
+    "recovery": "reinstallable"
+  },
+  {
+    "name": "coverage",
+    "category": "Testes",
+    "description": "Relatórios e dados de cobertura de testes.",
+    "risk": "low",
+    "recovery": "regenerable"
+  },
+  {
+    "name": ".gradle",
+    "category": "Cache Gradle",
+    "description": "Cache local criado pelo sistema de compilação Gradle.",
+    "risk": "low",
+    "recovery": "regenerable"
+  },
+  {
+    "name": "Pods",
+    "category": "Dependências Apple",
+    "description": "Dependências CocoaPods instaladas para projectos Apple.",
+    "risk": "low",
+    "recovery": "reinstallable"
+  },
+  {
+    "name": "DerivedData",
+    "category": "Compilação Apple",
+    "description": "Resultados de compilação e cache do Xcode.",
+    "risk": "low",
+    "recovery": "regenerable"
+  },
+  {
+    "name": "target",
+    "category": "Compilação Rust",
+    "description": "Ficheiros compilados e dependências locais de projectos Rust.",
+    "risk": "medium",
+    "recovery": "regenerable"
+  },
+  {
+    "name": "dist",
+    "category": "Distribuição",
+    "description": "Ficheiros preparados para distribuição ou publicação.",
+    "risk": "medium",
+    "recovery": "review"
+  },
+  {
+    "name": "build",
+    "category": "Compilação",
+    "description": "Resultados de compilação de várias ferramentas e linguagens.",
+    "risk": "medium",
+    "recovery": "review"
+  },
+  {
+    "name": "tmp",
+    "category": "Temporários",
+    "description": "Ficheiros temporários como cache, PID e sockets; pode conter dados específicos da aplicação, por isso requer revisão.",
+    "risk": "medium",
+    "recovery": "review"
+  },
+  {
+    "name": "vendor",
+    "category": "Dependências",
+    "description": "Dependências incluídas no projecto, como vendor/bundle do Bundler.",
+    "risk": "medium",
+    "recovery": "review"
+  }
+]
