@@ -37,6 +37,9 @@ jobs:
         with:
           components: rustfmt, clippy
 
+      - name: Install Tauri Linux dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential curl wget file pkg-config libxdo-dev libssl-dev librsvg2-dev libayatana-appindicator3-dev libwebkit2gtk-4.1-dev
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -84,7 +87,7 @@ jobs:
           );
 
           const cargoPackage = cargoMetadata.packages.find(
-            (pkg) => pkg.name === "sweepdevdisk"
+            (pkg) => pkg.name === "sweep-dev-disk"
           );
 
           if (!cargoPackage) {
@@ -94,9 +97,12 @@ jobs:
           const versions = {
             package: packageJson.version,
             cargo: cargoPackage.version,
-            tauri: tauriConfig.version,
-            windows: windowsConfig.version
+            tauri: tauriConfig.version
           };
+
+          if (windowsConfig.version !== undefined) {
+            versions.windows = windowsConfig.version;
+          }
 
           for (const [source, version] of Object.entries(versions)) {
             if (version !== tagVersion) {
