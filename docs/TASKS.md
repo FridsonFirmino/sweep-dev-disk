@@ -11,7 +11,6 @@
 - [x] Adicionar vistas de estado vazio, progresso, erros e sucesso.
 - [x] Configurar CI e workflows de compilação para Ubuntu e Windows.
 - [ ] Executar e validar a aplicação e os instaladores em ambientes Ubuntu e Windows.
-- [ ] Configurar os responsáveis no CODEOWNERS e os URLs dos emblemas quando forem conhecidos os responsáveis e o URL oficial.
 
 ## Definições do utilizador
 
