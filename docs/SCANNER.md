@@ -93,7 +93,7 @@ Uma conclusão normal devolve `ScanResult` com:
 - `completedAt`: instante de conclusão em ISO 8601 UTC;
 - `warnings`: avisos não fatais, cada um com um `code` estável e um `path` opcional.
 
-O resumo apresenta a soma da capacidade e do espaço disponível nos volumes analisados. O espaço potencialmente recuperável é calculado a partir dos artefactos encontrados e não é subtraído do espaço disponível, porque a limpeza ainda não foi executada.
+O resumo apresenta a soma da capacidade e do espaço disponível nos volumes analisados. O espaço potencialmente recuperável é calculado a partir dos artefactos encontrados e não é subtraído do espaço disponível; depois de uma limpeza executada, o valor libertado é registado em [CLEANUP.md](CLEANUP.md) e no histórico local.
 
 Os códigos de aviso são `no_scan_directories`, `all_scan_directories_excluded`, `invalid_scan_directory`, `invalid_excluded_directory`, `directory_unavailable`, `symlink_outside_scan_roots`, `max_depth_reached`, `scan_limit_reached`, `size_overflow` e `warnings_truncated`. Um erro numa raiz não descarta resultados de outras raízes. Os códigos são identificadores de contrato; o frontend é responsável pelas mensagens em português.
 

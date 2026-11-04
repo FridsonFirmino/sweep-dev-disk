@@ -149,7 +149,7 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
 
       <SettingsSection
         title="Limpeza"
-        description="Definições de segurança para remover artefactos de desenvolvimento. A limpeza ainda não está ligada ao serviço de sistema."
+        description="Definições de segurança para remover artefactos de desenvolvimento. A limpeza envia os directórios seleccionados para o lixo do sistema."
       >
         <div className="divide-y divide-border rounded-md border border-border">
           <div className="flex min-h-14 items-center justify-between gap-6 px-3.5 py-2.5">
@@ -177,13 +177,12 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
         </div>
         <p className="mt-2 flex items-center gap-1.5 text-[11px] text-muted">
           <LockKeyhole className="size-3.5" aria-hidden="true" />A confirmação e a validação
-          mantêm-se activas por segurança.
+          mantêm-se activas por segurança. O histórico local fica na página Histórico.
         </p>
       </SettingsSection>
 
       <p className="mt-6 text-[11px] text-muted">
-        Os directórios de análise são utilizados pelo scanner. As opções de limpeza ainda não estão
-        ligadas ao serviço do sistema.
+        Os directórios de análise são utilizados pelo scanner e pela revalidação da limpeza.
       </p>
     </div>
   );

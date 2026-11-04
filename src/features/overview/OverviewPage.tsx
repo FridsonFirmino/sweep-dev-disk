@@ -14,6 +14,7 @@ import { readSettingsPreferences } from "@/features/settings/settings-preference
 import { cancelScan, cleanArtifacts, scanProjects } from "@/services/projects";
 import type {
   Artifact,
+  CleanupRequest,
   CleanupResult,
   DiskSpace,
   Project,
@@ -34,6 +35,9 @@ export function OverviewPage() {
   const [scanWarnings, setScanWarnings] = useState<ScanWarning[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [reviewOpen, setReviewOpen] = useState(false);
+  const [simulating, setSimulating] = useState(false);
+  const [cleaning, setCleaning] = useState(false);
+  const [simulation, setSimulation] = useState<CleanupResult | null>(null);
   const [cleanupResult, setCleanupResult] = useState<CleanupResult | null>(null);
   const controllerRef = useRef<AbortController | null>(null);
 
@@ -52,6 +56,7 @@ export function OverviewPage() {
   async function startScan() {
     setError(null);
     setCleanupResult(null);
+    setSimulation(null);
     setScanWarnings([]);
     setScannedDisks(null);
     setSelectedArtifactIds([]);
@@ -90,6 +95,7 @@ export function OverviewPage() {
   }
 
   function toggleArtifact(artifact: Artifact) {
+    setSimulation(null);
     setSelectedArtifactIds((current) =>
       current.includes(artifact.id)
         ? current.filter((id) => id !== artifact.id)
@@ -97,15 +103,42 @@ export function OverviewPage() {
     );
   }
 
+  function cleanupRequest(dryRun: boolean): CleanupRequest {
+    const preferences = readSettingsPreferences();
+    return {
+      selection: {
+        projectId: selectedProject?.id ?? "",
+        artifactIds: selectedArtifactIds,
+      },
+      projectDirectories: preferences.projectDirectories,
+      excludedDirectories: preferences.excludedDirectories,
+      dryRun,
+    };
+  }
+
+  async function simulateCleanup() {
+    if (!selectedProject || selectedArtifactIds.length === 0) return;
+    setError(null);
+    setSimulating(true);
+    try {
+      const result = await cleanArtifacts(cleanupRequest(true));
+      setSimulation(result);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Não foi possível simular a limpeza.");
+      setSimulation(null);
+    } finally {
+      setSimulating(false);
+    }
+  }
+
   async function confirmCleanup() {
     if (!selectedProject) return;
     setError(null);
+    setCleaning(true);
     try {
-      const result = await cleanArtifacts({
-        projectId: selectedProject.id,
-        artifactIds: selectedArtifactIds,
-      });
+      const result = await cleanArtifacts(cleanupRequest(false));
       setCleanupResult(result);
+      setSimulation(null);
       setProjects((current) =>
         current.map((project) =>
           project.id === selectedProject.id
@@ -123,7 +156,16 @@ export function OverviewPage() {
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Não foi possível concluir a limpeza.");
       setReviewOpen(false);
+      setSimulation(null);
+    } finally {
+      setCleaning(false);
     }
+  }
+
+  function closeReview() {
+    if (simulating || cleaning) return;
+    setReviewOpen(false);
+    setSimulation(null);
   }
 
   return (
@@ -151,7 +193,10 @@ export function OverviewPage() {
                   project={selectedProject}
                   selectedIds={selectedArtifactIds}
                   onToggle={toggleArtifact}
-                  onReview={() => setReviewOpen(true)}
+                  onReview={() => {
+                    setSimulation(null);
+                    setReviewOpen(true);
+                  }}
                 />
               </div>
             )}
@@ -162,6 +207,7 @@ export function OverviewPage() {
                 onSelect={(projectId) => {
                   setSelectedProjectId(projectId);
                   setSelectedArtifactIds([]);
+                  setSimulation(null);
                 }}
               />
             </div>
@@ -175,7 +221,11 @@ export function OverviewPage() {
         <CleanupReviewDialog
           project={selectedProject}
           artifacts={selectedArtifacts}
-          onCancel={() => setReviewOpen(false)}
+          simulating={simulating}
+          cleaning={cleaning}
+          simulation={simulation}
+          onCancel={closeReview}
+          onSimulate={simulateCleanup}
           onConfirm={confirmCleanup}
         />
       )}

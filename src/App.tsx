@@ -1,6 +1,7 @@
 import { AppLayout, type AppPage } from "@/components/layout/AppLayout";
 import { AboutPage } from "@/features/about/AboutPage";
 import { SupportedArtifactsPage } from "@/features/artifacts/SupportedArtifactsPage";
+import { CleanupHistoryPage } from "@/features/history/CleanupHistoryPage";
 import { OverviewPage } from "@/features/overview/OverviewPage";
 import { SettingsPage } from "@/features/settings/SettingsPage";
 import { useTheme } from "@/hooks/use-theme";
@@ -14,7 +15,7 @@ function App() {
     const bootScreen = document.getElementById("boot-screen");
     if (!bootScreen) return;
 
-    const timeout = window.setTimeout(() => bootScreen.remove(), 3500);
+    const timeout = window.setTimeout(() => bootScreen.remove(), 1500);
     return () => window.clearTimeout(timeout);
   }, []);
 
@@ -24,6 +25,8 @@ function App() {
         <OverviewPage />
       ) : page === "settings" ? (
         <SettingsPage preference={preference} onPreferenceChange={setPreference} />
+      ) : page === "history" ? (
+        <CleanupHistoryPage />
       ) : page === "about" ? (
         <AboutPage />
       ) : (
