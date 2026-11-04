@@ -41,7 +41,7 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-8 py-8">
+    <div className="mx-auto max-w-360 px-8 py-8">
       <header className="mb-7 border-b border-border pb-5">
         <h1 className="text-2xl font-semibold tracking-tight">Definições</h1>
         <p className="mt-1.5 text-[13px] text-secondary">

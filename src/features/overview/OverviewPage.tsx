@@ -127,7 +127,7 @@ export function OverviewPage() {
   }
 
   return (
-    <div className="mx-auto max-w-[1440px] px-8 py-8">
+    <div className="mx-auto max-w-360 px-8 py-8">
       <OverviewHeader
         scanning={scanState === "scanning"}
         hasProjects={projects.length > 0}
@@ -143,24 +143,28 @@ export function OverviewPage() {
       {projects.length > 0 ? (
         <>
           <div
-            className={`grid gap-6 pt-6 ${selectedProject ? "grid-cols-[minmax(0,1fr)_320px]" : "grid-cols-1"}`}
+            className={`grid min-w-0 grid-cols-1 gap-6 pt-6 ${selectedProject ? "2xl:grid-cols-[minmax(0,1fr)_320px]" : ""}`}
           >
-            <ProjectList
-              projects={orderedProjects}
-              selectedProjectId={selectedProjectId}
-              onSelect={(projectId) => {
-                setSelectedProjectId(projectId);
-                setSelectedArtifactIds([]);
-              }}
-            />
             {selectedProject && (
-              <ProjectDetails
-                project={selectedProject}
-                selectedIds={selectedArtifactIds}
-                onToggle={toggleArtifact}
-                onReview={() => setReviewOpen(true)}
-              />
+              <div className="2xl:order-2">
+                <ProjectDetails
+                  project={selectedProject}
+                  selectedIds={selectedArtifactIds}
+                  onToggle={toggleArtifact}
+                  onReview={() => setReviewOpen(true)}
+                />
+              </div>
             )}
+            <div className="min-w-0 2xl:order-1">
+              <ProjectList
+                projects={orderedProjects}
+                selectedProjectId={selectedProjectId}
+                onSelect={(projectId) => {
+                  setSelectedProjectId(projectId);
+                  setSelectedArtifactIds([]);
+                }}
+              />
+            </div>
           </div>
         </>
       ) : scanState === "idle" && !error ? (
