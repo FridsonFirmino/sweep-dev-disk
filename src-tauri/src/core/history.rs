@@ -9,7 +9,7 @@ use crate::models::{CleanupHistoryEntry, CleanupHistoryFile, CleanupResult};
 /// Número máximo de entradas mantidas no histórico.
 const MAX_ENTRIES: usize = 200;
 /// Número máximo de dias de retenção.
-const MAX_AGE_DAYS: i64 = 90;
+const MAX_AGE_DAYS: i64 = 30;
 const HISTORY_VERSION: u32 = 1;
 
 pub struct HistoryStore {

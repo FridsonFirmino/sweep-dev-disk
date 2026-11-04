@@ -65,7 +65,7 @@ export function CleanupHistoryPage() {
       <header className="mb-7 border-b border-border pb-5">
         <h1 className="text-2xl font-semibold tracking-tight">Histórico de limpezas</h1>
         <p className="mt-1.5 text-[13px] text-secondary">
-          Registo local das limpezas executadas. O histórico é limitado a 90 dias e 200 entradas.
+          Registo local das limpezas executadas. O histórico é limitado a 30 dias e 200 entradas.
           Restaurar usa o lixo do sistema quando disponível.
         </p>
       </header>

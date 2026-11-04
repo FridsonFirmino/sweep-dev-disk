@@ -106,7 +106,7 @@ interface CleanupResult {
 
 - Após cada pedido não simulado, o backend acrescenta uma entrada a `cleanup-history.json` no directório de dados da aplicação.
 - A entrada regista o instante UTC, o projecto, os caminhos tratados, `reclaimedBytes`, as falhas e se o restauro do lixo é suportado.
-- A retenção predefinição limita o histórico a um número máximo de entradas e a um número máximo de dias; as entradas mais antigas são removidas primeiro.
+- A retenção predefinição limita o histórico a 200 entradas e a 30 dias; as entradas mais antigas são removidas primeiro.
 - Falhas de leitura ou escrita do histórico não falham a limpeza; são ignoradas ou produzem um aviso não fatal.
 - A opção de anular restaura o conteúdo a partir do lixo do sistema operativo quando a plataforma e a crate `trash` o permitem. Quando não é possível, a interface apresenta a entrada como não restaurável.
 
