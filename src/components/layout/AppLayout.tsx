@@ -1,7 +1,7 @@
-import { CircleUserRound, LayoutDashboard, Settings } from "lucide-react";
+import { Archive, CircleUserRound, LayoutDashboard, Settings } from "lucide-react";
 import type { ReactNode } from "react";
 
-export type AppPage = "overview" | "settings" | "about";
+export type AppPage = "overview" | "artifacts" | "settings" | "about";
 
 interface AppLayoutProps {
   page: AppPage;
@@ -24,7 +24,12 @@ export function AppLayout({ page, onNavigate, children }: AppLayoutProps) {
             label="Visão geral"
             onClick={() => onNavigate("overview")}
           />
-          {/* <div className="my-1" /> */}
+          <NavItem
+            active={page === "artifacts"}
+            icon={<Archive className="size-4" />}
+            label="Artefactos"
+            onClick={() => onNavigate("artifacts")}
+          />
           <NavItem
             active={page === "settings"}
             icon={<Settings className="size-4" />}

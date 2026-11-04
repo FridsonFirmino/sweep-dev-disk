@@ -4,13 +4,16 @@
 use std::collections::HashSet;
 use std::fs::{self, DirEntry, Metadata};
 use std::path::{Component, Path, PathBuf};
+use std::sync::LazyLock;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::{SystemTime, UNIX_EPOCH};
+
+use serde::Deserialize;
+use sysinfo::Disks;
 
 use crate::models::{
     Artifact, ArtifactRisk, DiskSpace, Project, ScanOptions, ScanProgress, ScanResult, ScanWarning,
 };
-use sysinfo::Disks;
 
 // Limites globais da primeira versão; resultados parciais incluem avisos quando são atingidos.
 const MAX_DEPTH: usize = 64;
@@ -19,7 +22,7 @@ const PROGRESS_INTERVAL: usize = 128;
 const MAX_SAFE_INTEGER: u64 = 9_007_199_254_740_991;
 const MAX_WARNINGS: usize = 100;
 
-// Marcadores e artefactos suportados são mantidos em sincronia com docs/SCANNER.md.
+// Marcadores de projectos detectados pelo scanner.
 const PROJECT_MARKERS: &[(&str, &str)] = &[
     ("package.json", "Node.js"),
     ("Cargo.toml", "Rust"),
@@ -36,72 +39,23 @@ const PROJECT_MARKERS: &[(&str, &str)] = &[
     ("CMakeLists.txt", "C/C++ (CMake)"),
 ];
 
-#[derive(Clone, Copy)]
+#[derive(Deserialize)]
 struct ArtifactPattern {
-    name: &'static str,
+    name: String,
     risk: ArtifactRiskKind,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Deserialize)]
+#[serde(rename_all = "lowercase")]
 enum ArtifactRiskKind {
     Low,
     Medium,
 }
 
-const ARTIFACT_PATTERNS: &[ArtifactPattern] = &[
-    ArtifactPattern {
-        name: "node_modules",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: ".next",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: "__pycache__",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: ".venv",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: "venv",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: "coverage",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: ".gradle",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: "Pods",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: "DerivedData",
-        risk: ArtifactRiskKind::Low,
-    },
-    ArtifactPattern {
-        name: "target",
-        risk: ArtifactRiskKind::Medium,
-    },
-    ArtifactPattern {
-        name: "dist",
-        risk: ArtifactRiskKind::Medium,
-    },
-    ArtifactPattern {
-        name: "build",
-        risk: ArtifactRiskKind::Medium,
-    },
-    ArtifactPattern {
-        name: "vendor",
-        risk: ArtifactRiskKind::Medium,
-    },
-];
+static ARTIFACT_PATTERNS: LazyLock<Vec<ArtifactPattern>> = LazyLock::new(|| {
+    serde_json::from_str(include_str!("../../../src/data/supported-artifacts.json"))
+        .expect("the shared supported-artifacts catalog must be valid")
+});
 
 struct ScanContext<'a, F>
 where
@@ -693,11 +647,10 @@ fn detect_technologies(entries: &[DirEntry]) -> Vec<String> {
     technologies
 }
 
-fn artifact_pattern(name: &str) -> Option<ArtifactPattern> {
+fn artifact_pattern(name: &str) -> Option<&'static ArtifactPattern> {
     ARTIFACT_PATTERNS
         .iter()
-        .find(|pattern| names_equal(name, pattern.name))
-        .copied()
+        .find(|pattern| names_equal(name, &pattern.name))
 }
 
 fn names_equal(left: &str, right: &str) -> bool {
