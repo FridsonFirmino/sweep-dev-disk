@@ -1,5 +1,6 @@
 import supportedArtifacts from "@/data/supported-artifacts.json";
 import { Archive, Info, Search } from "lucide-react";
+import { artifactRecovery, type RecoveryInfo } from "@/lib/artifacts";
 import { useMemo, useState } from "react";
 
 export function SupportedArtifactsPage() {
@@ -64,7 +65,7 @@ export function SupportedArtifactsPage() {
 
         {artifacts.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[680px] border-collapse text-left">
+            <table className="w-full min-w-[800px] border-collapse text-left">
               <thead className="bg-sidebar text-[10px] font-medium uppercase tracking-wide text-muted">
                 <tr>
                   <th scope="col" className="px-3.5 py-2.5">
@@ -78,6 +79,9 @@ export function SupportedArtifactsPage() {
                   </th>
                   <th scope="col" className="px-3.5 py-2.5">
                     Risco
+                  </th>
+                  <th scope="col" className="px-3.5 py-2.5">
+                    Recuperação
                   </th>
                 </tr>
               </thead>
@@ -95,6 +99,9 @@ export function SupportedArtifactsPage() {
                     </td>
                     <td className="whitespace-nowrap px-3.5 py-3">
                       <RiskBadge risk={artifact.risk} />
+                    </td>
+                    <td className="px-3.5 py-3">
+                      <RecoveryBadge recovery={artifactRecovery(artifact.name)} />
                     </td>
                   </tr>
                 ))}
@@ -127,6 +134,21 @@ function RiskBadge({ risk }: { risk: string }) {
       className={`inline-flex rounded border px-2 py-1 text-[11px] font-medium ${isLowRisk ? "border-success/30 bg-success/10 text-success" : "border-warning/30 bg-warning/10 text-warning"}`}
     >
       {isLowRisk ? "Baixo" : "Médio"}
+    </span>
+  );
+}
+
+function RecoveryBadge({ recovery }: { recovery: RecoveryInfo | null }) {
+  if (!recovery) {
+    return <span className="text-[11px] text-muted">—</span>;
+  }
+  const isSafe = recovery.kind !== "review";
+  return (
+    <span
+      title={recovery.note}
+      className={`inline-flex rounded border px-2 py-1 text-[11px] font-medium ${isSafe ? "border-success/30 bg-success/10 text-success" : "border-warning/30 bg-warning/10 text-warning"}`}
+    >
+      {recovery.label}
     </span>
   );
 }
