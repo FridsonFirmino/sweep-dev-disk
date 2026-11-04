@@ -8,11 +8,16 @@ pub fn run() {
     tauri::Builder::default()
         // Guarda um único token de cancelamento partilhado por todos os comandos do scanner.
         .manage(commands::scanner::ScanState::default())
+        // Guarda o marcador de limpeza activa para impedir execuções concorrentes.
+        .manage(commands::cleanup::CleanupState::default())
         .plugin(tauri_plugin_opener::init())
-        // Só expõe a análise local e o cancelamento; a limpeza permanece indisponível.
+        // Expõe a análise local, o cancelamento e a limpeza com revalidação.
         .invoke_handler(tauri::generate_handler![
             commands::scanner::scan_projects,
-            commands::scanner::cancel_scan
+            commands::scanner::cancel_scan,
+            commands::cleanup::cleanup_artifacts,
+            commands::cleanup::list_cleanup_history,
+            commands::cleanup::restore_cleanup_entry
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

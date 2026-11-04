@@ -68,13 +68,21 @@ export function ScanWarningsNotice({ warnings }: { warnings: ScanWarning[] }) {
 }
 
 export function CleanupSuccessNotice({ result }: { result: CleanupResult }) {
+  const failureCount = result.failures.length;
   return (
     <div
       role="status"
-      className="mt-5 flex items-center gap-2 rounded-md border border-success/30 bg-success/10 p-3 text-[13px] text-success"
+      className="mt-5 space-y-1 rounded-md border border-success/30 bg-success/10 p-3 text-[13px] text-success"
     >
-      <CheckCircle2 className="size-4" aria-hidden="true" />
-      Espaço recuperado: {formatBytes(result.reclaimedBytes)}.
+      <p className="flex items-center gap-2">
+        <CheckCircle2 className="size-4" aria-hidden="true" />
+        Espaço recuperado: {formatBytes(result.reclaimedBytes)}.
+      </p>
+      {failureCount > 0 && (
+        <p className="text-warning">
+          {failureCount} artefacto(s) não puderam ser removidos. Reveja a lista e tente novamente.
+        </p>
+      )}
     </div>
   );
 }

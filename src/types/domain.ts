@@ -56,8 +56,33 @@ export interface CleanupSelection {
   artifactIds: string[];
 }
 
+export interface CleanupRequest {
+  selection: CleanupSelection;
+  projectDirectories: string[];
+  excludedDirectories: string[];
+  dryRun: boolean;
+}
+
+export interface CleanupFailure {
+  artifactId: string;
+  code: string;
+  message?: string;
+}
+
 export interface CleanupResult {
+  dryRun: boolean;
+  removedArtifactIds: string[];
+  wouldRemoveArtifactIds: string[];
+  reclaimedBytes: number;
+  failures: CleanupFailure[];
+}
+
+export interface CleanupHistoryEntry {
+  id: string;
+  finishedAt: string;
+  projectId: string;
   removedArtifactIds: string[];
   reclaimedBytes: number;
-  failures: Array<{ artifactId: string; message: string }>;
+  failureCount: number;
+  restorable: boolean;
 }

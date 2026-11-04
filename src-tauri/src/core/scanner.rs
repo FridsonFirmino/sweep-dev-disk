@@ -3,7 +3,7 @@
 //! Os limites de profundidade, entradas e avisos protegem o tempo e a memória da aplicação.
 use std::collections::HashSet;
 use std::fs::{self, DirEntry, Metadata};
-use std::path::{Component, Path, PathBuf};
+use std::path::{Path, PathBuf};
 use std::sync::LazyLock;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -11,6 +11,9 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use serde::Deserialize;
 use sysinfo::Disks;
 
+use crate::core::paths::{
+    display_path, expand_home, is_excluded, names_equal, normalize_lexically, path_is_within,
+};
 use crate::models::{
     Artifact, ArtifactRisk, DiskSpace, Project, ScanOptions, ScanProgress, ScanResult, ScanWarning,
 };
@@ -543,67 +546,6 @@ fn normalize_exclusions(input: &[String], warnings: &mut Vec<ScanWarning>) -> Ve
     excluded
 }
 
-fn expand_home(value: &str) -> Option<PathBuf> {
-    let value = value.trim();
-    if value == "~" || value.starts_with("~/") || value.starts_with("~\\") {
-        let home = home_directory()?;
-        if value == "~" {
-            return Some(home);
-        }
-        return Some(home.join(&value[2..]));
-    }
-    if value.starts_with('~') {
-        return None;
-    }
-    Some(PathBuf::from(value))
-}
-
-fn home_directory() -> Option<PathBuf> {
-    #[cfg(windows)]
-    let home = std::env::var_os("USERPROFILE");
-    #[cfg(not(windows))]
-    let home = std::env::var_os("HOME");
-    home.map(PathBuf::from)
-}
-
-fn normalize_lexically(path: &Path) -> PathBuf {
-    let mut normalized = PathBuf::new();
-    for component in path.components() {
-        match component {
-            Component::Prefix(prefix) => normalized.push(prefix.as_os_str()),
-            Component::RootDir => normalized.push(component.as_os_str()),
-            Component::CurDir => {}
-            Component::ParentDir => {
-                normalized.pop();
-            }
-            Component::Normal(part) => normalized.push(part),
-        }
-    }
-    normalized
-}
-
-fn is_excluded(path: &Path, excluded: &[PathBuf]) -> bool {
-    excluded
-        .iter()
-        .any(|excluded_path| path_is_within(path, excluded_path))
-}
-
-fn path_is_within(path: &Path, root: &Path) -> bool {
-    #[cfg(windows)]
-    {
-        let path = path.to_string_lossy().replace('/', "\\").to_lowercase();
-        let root = root.to_string_lossy().replace('/', "\\").to_lowercase();
-        path == root
-            || path
-                .strip_prefix(&root)
-                .is_some_and(|remainder| remainder.starts_with('\\'))
-    }
-    #[cfg(not(windows))]
-    {
-        path == root || path.starts_with(root)
-    }
-}
-
 fn read_entries(path: &Path, limit: usize) -> Result<(Vec<DirEntry>, bool), ()> {
     let mut entries = Vec::new();
     let mut iterator = fs::read_dir(path).map_err(|_| ())?;
@@ -653,17 +595,6 @@ fn artifact_pattern(name: &str) -> Option<&'static ArtifactPattern> {
         .find(|pattern| names_equal(name, &pattern.name))
 }
 
-fn names_equal(left: &str, right: &str) -> bool {
-    #[cfg(windows)]
-    {
-        left.eq_ignore_ascii_case(right)
-    }
-    #[cfg(not(windows))]
-    {
-        left == right
-    }
-}
-
 fn is_hidden_directory(entry: &DirEntry, metadata: &Metadata, include_hidden: bool) -> bool {
     if include_hidden {
         return false;
@@ -705,10 +636,6 @@ fn push_warning(warnings: &mut Vec<ScanWarning>, code: &str, path: Option<String
         code: code.to_owned(),
         path,
     });
-}
-
-fn display_path(path: &Path) -> String {
-    path.to_string_lossy().into_owned()
 }
 
 fn format_timestamp(time: SystemTime) -> String {
