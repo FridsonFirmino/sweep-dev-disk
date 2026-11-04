@@ -52,6 +52,8 @@ Um directório é considerado projecto quando contém pelo menos um dos seguinte
 
 Dentro de um projecto, os seguintes nomes de directório são reconhecidos como artefactos: `node_modules`, `.next`, `__pycache__`, `.venv`, `venv`, `coverage`, `.gradle`, `Pods`, `DerivedData`, `target`, `dist`, `build` e `vendor`. Os primeiros nove têm risco `low`; `target`, `dist`, `build` e `vendor` têm risco `medium`. Ao encontrar um artefacto, o scanner mede-o e não percorre o seu conteúdo à procura de projectos.
 
+A medição de um artefacto inclui também os seus subdirectórios ocultos, como `.pnpm` dentro de `node_modules`. A preferência para analisar directórios ocultos controla a descoberta de projectos fora dos artefactos. Ligações simbólicas dentro dos artefactos continuam a respeitar a preferência de as seguir e o limite das raízes analisadas.
+
 O tamanho é a soma do tamanho lógico dos ficheiros alcançáveis dentro do artefacto, respeitando exclusões, limites e a opção de ligações simbólicas. `reclaimableBytes` corresponde a esta estimativa. Pode diferir do espaço efectivamente libertado por causa de hard links, ficheiros esparsos ou compressão do sistema de ficheiros; não deve ser usado como garantia de espaço recuperável numa operação destrutiva.
 
 O identificador do projecto e do artefacto é o caminho canónico. `lastActivity` usa a data de modificação do directório raiz do projecto.

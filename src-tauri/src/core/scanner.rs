@@ -513,10 +513,8 @@ where
                 };
 
                 if metadata.is_dir() {
-                    if is_hidden_directory(&entry, &metadata, self.options.scan_hidden_directories)
-                    {
-                        continue;
-                    }
+                    // Os filtros de directórios ocultos limitam a descoberta de projectos,
+                    // mas não podem omitir conteúdo que será contado dentro de um artefacto.
                     pending.push((resolved_path, depth + 1));
                 } else if metadata.is_file() {
                     total = total.saturating_add(metadata.len());

@@ -11,7 +11,7 @@ export const defaultSettingsPreferences: SettingsPreferences = {
   projectDirectories: [],
   excludedDirectories: [],
   followSymbolicLinks: false,
-  scanHiddenDirectories: false,
+  scanHiddenDirectories: true,
 };
 
 export function readSettingsPreferences(): SettingsPreferences {
@@ -30,7 +30,7 @@ export function readSettingsPreferences(): SettingsPreferences {
         ? value.excludedDirectories.filter((item): item is string => typeof item === "string")
         : [],
       followSymbolicLinks: value.followSymbolicLinks === true,
-      scanHiddenDirectories: value.scanHiddenDirectories === true,
+      scanHiddenDirectories: value.scanHiddenDirectories !== false,
     };
   } catch {
     return defaultSettingsPreferences;

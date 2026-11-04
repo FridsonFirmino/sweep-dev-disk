@@ -140,7 +140,7 @@ export function SettingsPage({ preference, onPreferenceChange }: SettingsPagePro
           />
           <SwitchSetting
             label="Analisar directórios ocultos"
-            description="Incluir directórios ocultos na análise de projectos."
+            description="Incluir directórios ocultos na análise de projectos. Activado por predefinição."
             checked={settings.scanHiddenDirectories}
             onChange={(checked) => update("scanHiddenDirectories", checked)}
           />
