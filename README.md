@@ -6,6 +6,10 @@
 
 O SweepDevDisk é uma aplicação de ambiente de trabalho para Ubuntu Linux e Windows, planeada para auditar o espaço em disco ocupado por artefactos de desenvolvimento que podem ser gerados novamente. Foi concebida como uma ferramenta local, sem servidor remoto.
 
+## Demo
+
+https://github.com/user-attachments/assets/4c7fb66b-1b7e-4646-804a-1e2372cf0183
+
 ## Objectivo do produto
 
 A aplicação deverá ajudar os programadores a identificar diretórios de projectos e a perceber o espaço ocupado por artefactos como `node_modules`, `.next`, resultados de compilação, diretórios `vendor` e caches de ferramentas. A limpeza manual e automática está planeada; nenhuma destas funcionalidades está implementada nesta fundação.
