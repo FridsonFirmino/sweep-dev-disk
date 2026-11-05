@@ -6,7 +6,7 @@ Siga as instruções de [DEVELOPMENT.md](DEVELOPMENT.md), instale as dependênci
 
 ## Branches e nomenclatura
 
-Use `main` para integrar alterações revistas. Crie branches de curta duração com os prefixos `feature/*`, `fix/*`, `refactor/*`, `docs/*` ou `chore/*`; use palavras em minúsculas separadas por hífen.
+Crie branches de curta duração com os prefixos `feature/*`, `fix/*`, `refactor/*`, `docs/*` ou `chore/*` apartir da branch `develop`. use palavras em minúsculas separadas por hífen.
 
 ## Commits
 
