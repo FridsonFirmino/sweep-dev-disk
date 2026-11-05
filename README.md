@@ -4,7 +4,7 @@
 
 ![CI](https://github.com/OWNER/REPOSITORY/actions/workflows/ci.yml/badge.svg) ![Rust](https://img.shields.io/badge/Rust-stable-orange) ![React](https://img.shields.io/badge/React-19-61dafb) ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6) ![Tauri](https://img.shields.io/badge/Tauri-2-ffc131) ![License](https://img.shields.io/badge/license-MIT-green)
 
-O SweepDevDisk é uma aplicação de ambiente de trabalho para Ubuntu Linux e Windows, planeada para auditar o espaço em disco ocupado por artefactos de desenvolvimento que podem ser gerados novamente. Foi concebida como uma ferramenta local, sem servidor remoto.
+O SweepDevDisk é um aplicativo para desktop destinado a auditar, localmente, o espaço em disco ocupado por artefatos de desenvolvimento. Ele permite identificar arquivos e diretórios que podem ser removidos para liberar espaço em disco, sem depender de servidores remotos.
 
 ## Demo
 
@@ -12,7 +12,7 @@ https://github.com/user-attachments/assets/4c7fb66b-1b7e-4646-804a-1e2372cf0183
 
 ## Objectivo do produto
 
-A aplicação deverá ajudar os programadores a identificar diretórios de projectos e a perceber o espaço ocupado por artefactos como `node_modules`, `.next`, resultados de compilação, diretórios `vendor` e caches de ferramentas. A limpeza manual envia os artefactos seleccionados para o lixo do sistema após revalidação; a limpeza automática e o agendamento continuam planeados.
+O objectivo do SweepDevDisk é ajudar programadores a identificar, analisar e remover artefactos de desenvolvimento que ocupam espaço desnecessário no disco, permitindo recuperar armazenamento sem comprometer os ficheiros de código-fonte dos seus projectos.
 
 ## Funcionalidades actuais (versão 1.0.0)
 
@@ -39,8 +39,8 @@ Node.js 24 LTS, pnpm 12 e Rust stable com Cargo. Para compilar a aplicação de 
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm dev       # inicia a aplicação Tauri
-pnpm dev:web   # inicia apenas o frontend Vite
+pnpm tauri dev       # inicia a aplicação Tauri (Desktop)
+pnpm run dev   # inicia apenas o frontend Vite
 ```
 
 ## Verificações de qualidade
@@ -60,9 +60,3 @@ Compilação do frontend: `pnpm build`. Em Ubuntu, compile os pacotes `.deb` e A
 ## Contribuição e roteiro
 
 Leia [CONTRIBUTING.md](docs/CONTRIBUTING.md) e a [lista central de tarefas](docs/TASKS.md). O plano inclui a análise de projectos, a detecção de artefactos, a análise de armazenamento, um painel, limpeza segura, histórico, regras, agendamento, segurança e distribuição para Ubuntu e Windows.
-
-## Licença
-
-MIT. Consulte [LICENSE](LICENSE); o titular dos direitos de autor e o ano permanecem como marcadores por preencher.
-
-> As ligações dos emblemas usam os marcadores `OWNER/REPOSITORY`. Actualize-os quando o URL oficial do repositório for conhecido.
