@@ -23,11 +23,11 @@ Estas são as dependências usadas pelo CI em Ubuntu 24.04. Para outras versões
 
 Instale o Visual Studio Build Tools com a carga de trabalho **Desenvolvimento para ambiente de trabalho com C++**, o WebView2 Runtime e Rust stable com a toolchain MSVC (por exemplo, `x86_64-pc-windows-msvc`). Consulte os [pré-requisitos oficiais do Tauri para Windows](https://v2.tauri.app/start/prerequisites/).
 
-Faça a compilação a partir do PowerShell ou do terminal do Visual Studio Developer:
+Execute ou compile a partir do PowerShell ou do terminal do Visual Studio Developer:
 
 ```powershell
 pnpm install --frozen-lockfile
-pnpm dev
+pnpm tauri dev
 pnpm tauri build --config src-tauri/tauri.windows.conf.json
 ```
 
@@ -37,10 +37,11 @@ O pacote Windows é configurado para produzir instaladores MSI e NSIS. A compila
 
 ```bash
 pnpm install --frozen-lockfile
-pnpm dev
+pnpm tauri dev   # inicia a aplicação Tauri (desktop)
+pnpm run dev     # inicia apenas o frontend Vite
 ```
 
-O comando `pnpm dev:web` inicia apenas o Vite em `http://localhost:1420`. A porta é fixa para que a webview do Tauri e o HMR usem um endereço previsível.
+O comando `pnpm tauri dev` compila e abre a aplicação de ambiente de desktop; o Vite arranca automaticamente como `beforeDevCommand`. O comando `pnpm run dev` inicia apenas o Vite em `http://localhost:1420`, útil para trabalhar só na interface do utilizador. A porta é fixa para que a webview do Tauri e o HMR usem um endereço previsível.
 
 ## Compilar e verificar
 
