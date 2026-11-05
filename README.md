@@ -57,6 +57,8 @@ cargo test --manifest-path src-tauri/Cargo.toml --all
 
 Compilação do frontend: `pnpm build`. Em Ubuntu, compile os pacotes `.deb` e AppImage com `pnpm tauri build`; em Windows, compile os instaladores `.msi` e NSIS com `pnpm tauri build --config src-tauri/tauri.windows.conf.json`.
 
-## Contribuição e roteiro
+## Como contribuir
 
-Leia [CONTRIBUTING.md](docs/CONTRIBUTING.md) e a [lista central de tarefas](docs/TASKS.md). O plano inclui a análise de projectos, a detecção de artefactos, a análise de armazenamento, um painel, limpeza segura, histórico, regras, agendamento, segurança e distribuição para Ubuntu e Windows.
+O fluxo completo está no guia de [contribuição](docs/CONTRIBUTING.md): abra uma issue, solicite a sua implementação, faça um fork, crie a sua branch a partir de `develop` e envie o pull request. Antes de começar, consulte a [lista central de tarefas](docs/TASKS.md) e o [código de conduta](CODE_OF_CONDUCT.md).
+
+O roteiro do produto inclui a análise de projectos, a detecção de artefactos, a análise de armazenamento, um painel, limpeza segura, histórico, regras, agendamento, segurança e distribuição para Ubuntu e Windows.
